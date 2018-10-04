@@ -1,7 +1,7 @@
-defmodule GrapevineWeb.Endpoint do
+defmodule Web.Endpoint do
   use Phoenix.Endpoint, otp_app: :grapevine
 
-  socket "/socket", GrapevineWeb.UserSocket
+  socket "/socket", Web.UserSocket
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -37,7 +37,7 @@ defmodule GrapevineWeb.Endpoint do
     key: "_grapevine_key",
     signing_salt: "KgU53XEQ"
 
-  plug GrapevineWeb.Router
+  plug Web.Router
 
   @doc """
   Callback invoked for dynamically configuring the endpoint.

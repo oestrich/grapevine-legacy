@@ -7,13 +7,14 @@ use Mix.Config
 
 # General application configuration
 config :grapevine,
+  namespace: Web,
   ecto_repos: [Grapevine.Repo]
 
 # Configures the endpoint
-config :grapevine, GrapevineWeb.Endpoint,
+config :grapevine, Web.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "gLo4T/sAuCqIs27L8VG7IJ/0B59Ys1v10cxxePrwrssF5nGgr1y4paBfN5WTGCJ9",
-  render_errors: [view: GrapevineWeb.ErrorView, accepts: ~w(html json)],
+  render_errors: [view: Web.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Grapevine.PubSub,
            adapter: Phoenix.PubSub.PG2]
 

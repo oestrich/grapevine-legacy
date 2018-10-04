@@ -1,8 +1,8 @@
-defmodule GrapevineWeb.UserSocket do
+defmodule Web.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", GrapevineWeb.RoomChannel
+  # channel "room:*", Web.RoomChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
@@ -30,7 +30,7 @@ defmodule GrapevineWeb.UserSocket do
   # Would allow you to broadcast a "disconnect" event and terminate
   # all active sockets and channels for a given user:
   #
-  #     GrapevineWeb.Endpoint.broadcast("user_socket:#{user.id}", "disconnect", %{})
+  #     Web.Endpoint.broadcast("user_socket:#{user.id}", "disconnect", %{})
   #
   # Returning `nil` makes this socket anonymous.
   def id(_socket), do: nil
