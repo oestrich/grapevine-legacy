@@ -47,7 +47,7 @@ defmodule Grapevine.ReleaseTasks do
 
   defp run_migrations_for(app) do
     IO.puts("Running migrations for #{app}")
-    Ecto.Migrator.run(Gossip.Repo, migrations_path(app), :up, all: true)
+    Ecto.Migrator.run(Grapevine.Repo, migrations_path(app), :up, all: true)
   end
 
   defp migrations_path(app), do: Path.join([priv_dir(app), "repo", "migrations"])
