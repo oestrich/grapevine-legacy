@@ -1,5 +1,7 @@
 # Grapevine
 
+![Grapevine](https://grapevine.haus/images/grapevine.png)
+
 Grapevine player network, associated with [Gossip](https://github.com/oestrich/gossip).
 
 - [MUD Coders Slack](https://slack.mudcoders.com/)
