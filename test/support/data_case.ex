@@ -22,6 +22,7 @@ defmodule Grapevine.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import Grapevine.DataCase
+      import Grapevine.TestHelpers
     end
   end
 

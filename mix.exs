@@ -33,7 +33,10 @@ defmodule Grapevine.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:bcrypt_elixir, "~> 1.0"},
+      {:comeonin, "~> 4.0"},
       {:distillery, "~> 2.0", runtime: false},
+      {:elixir_uuid, "~> 1.1"},
       {:phoenix, "~> 1.3.4"},
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_ecto, "~> 3.2"},
@@ -55,7 +58,8 @@ defmodule Grapevine.Mixfile do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      "test": ["ecto.create --quiet", "ecto.migrate", "test"]
+      "ecto.migrate.reset": ["ecto.drop", "ecto.create", "ecto.migrate"],
+      test: ["ecto.create --quiet", "ecto.migrate", "test"]
     ]
   end
 end
