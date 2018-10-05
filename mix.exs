@@ -4,7 +4,7 @@ defmodule Grapevine.Mixfile do
   def project do
     [
       app: :grapevine,
-      version: "0.0.1",
+      version: "0.1.0",
       elixir: "~> 1.4",
       elixirc_paths: elixirc_paths(Mix.env),
       compilers: [:phoenix, :gettext] ++ Mix.compilers,
@@ -33,6 +33,7 @@ defmodule Grapevine.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:distillery, "~> 2.0", runtime: false},
       {:phoenix, "~> 1.3.4"},
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_ecto, "~> 3.2"},
