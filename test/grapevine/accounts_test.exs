@@ -6,13 +6,13 @@ defmodule Grapevine.AccountsTest do
   describe "registering a new account" do
     test "successful" do
       {:ok, user} = Accounts.register(%{
-        username: "admin",
-        email: "admin@example.com",
+        username: "user",
+        email: "user@example.com",
         password: "password",
         password_confirmation: "password",
       })
 
-      assert user.email == "admin@example.com"
+      assert user.email == "user@example.com"
       assert user.password_hash
     end
   end

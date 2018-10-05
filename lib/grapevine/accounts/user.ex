@@ -5,6 +5,8 @@ defmodule Grapevine.Accounts.User do
 
   use Grapevine.Schema
 
+  alias Grapevine.Accounts
+
   schema "users" do
     field(:username, :string)
     field(:email, :string)
@@ -19,13 +21,43 @@ defmodule Grapevine.Accounts.User do
   def changeset(struct, params) do
     struct
     |> cast(params, [:username, :email, :password, :password_confirmation])
+    |> trim(:username)
+    |> trim(:email)
+    |> check_username_against_block_list()
     |> validate_required([:username, :email])
     |> validate_format(:email, ~r/.+@.+\..+/)
     |> ensure(:token, UUID.uuid4())
     |> hash_password()
     |> validate_required([:password_hash])
     |> validate_confirmation(:password)
-    |> unique_constraint(:email)
+    |> unique_constraint(:username, name: :users_lower_username_index)
+    |> unique_constraint(:email, name: :users_lower_email_index)
+  end
+
+  defp trim(changeset, field) do
+    case get_change(changeset, field) do
+      nil ->
+        changeset
+
+      value ->
+        put_change(changeset, field, String.trim(value))
+    end
+  end
+
+  defp check_username_against_block_list(changeset) do
+    case get_change(changeset, :username) do
+      nil ->
+        changeset
+
+      username ->
+        case Enum.member?(Accounts.username_blocklist(), String.downcase(username)) do
+          true ->
+            add_error(changeset, :username, "is blocked")
+
+          false ->
+            changeset
+        end
+    end
   end
 
   defp hash_password(changeset) do

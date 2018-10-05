@@ -1,0 +1,9 @@
+admin
+administrator
+immortal
+imm
+root
+staff
+sysop
+wiz
+wizard

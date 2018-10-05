@@ -3,8 +3,8 @@ defmodule Grapevine.TestHelpers do
 
   def create_user(attributes \\ %{}) do
     attributes = Map.merge(%{
-      username: "admin",
-      email: "admin@example.com",
+      username: "user",
+      email: "user@example.com",
       password: "password",
       password_confirmation: "password",
     }, attributes)

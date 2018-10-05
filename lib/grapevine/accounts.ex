@@ -6,6 +6,7 @@ defmodule Grapevine.Accounts do
   alias Grapevine.Accounts.User
   alias Grapevine.Repo
 
+  @type username :: String.t()
   @type user_params :: map()
   @type token :: String.t()
 
@@ -62,5 +63,22 @@ defmodule Grapevine.Accounts do
       false ->
         {:error, :invalid}
     end
+  end
+
+  @doc """
+  Load the list of blocked usernames
+
+  File is in `priv/users/block-list.txt`
+
+  This file is a newline separated list of downcased names
+  """
+  @spec username_blocklist() :: [username()]
+  def username_blocklist() do
+    blocklist = Path.join(:code.priv_dir(:grapevine), "users/block-list.txt")
+    {:ok, blocklist} = File.read(blocklist)
+
+    blocklist
+    |> String.split("\n")
+    |> Enum.map(&String.trim/1)
   end
 end
