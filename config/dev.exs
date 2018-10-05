@@ -54,3 +54,7 @@ config :grapevine, Grapevine.Repo,
   database: "grapevine_dev",
   hostname: "localhost",
   pool_size: 10
+
+if File.exists?("config/dev.local.exs") do
+  import_config("dev.local.exs")
+end

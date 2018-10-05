@@ -37,6 +37,7 @@ defmodule Grapevine.Mixfile do
       {:comeonin, "~> 4.0"},
       {:distillery, "~> 2.0", runtime: false},
       {:elixir_uuid, "~> 1.1"},
+      {:gossip, "~> 0.5"},
       {:phoenix, "~> 1.3.4"},
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_ecto, "~> 3.2"},

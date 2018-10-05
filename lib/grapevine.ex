@@ -1,9 +1,16 @@
 defmodule Grapevine do
   @moduledoc """
-  Grapevine keeps the contexts that define your domain
-  and business logic.
-
-  Contexts are also responsible for managing your data, regardless
-  if it comes from the database, an external API or others.
+  Grapevine main module
   """
+
+  @doc """
+  Get the running version of Grapevine
+  """
+  def version() do
+    grapevine =
+      :application.loaded_applications()
+      |> Enum.find(&(elem(&1, 0) == :grapevine))
+
+    "Grapevine v#{elem(grapevine, 2)}"
+  end
 end
