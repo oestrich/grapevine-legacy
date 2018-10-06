@@ -1,4 +1,10 @@
 defmodule Grapevine.GossipCallback do
+  @moduledoc """
+  Callback module for Gossip
+
+  Plugs into the gossip network.
+  """
+
   @behaviour Gossip.Client
 
   @impl true

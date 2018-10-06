@@ -1,4 +1,6 @@
 defmodule Grapevine.TestHelpers do
+  @moduledoc false
+
   alias Grapevine.Accounts
 
   def create_user(attributes \\ %{}) do
