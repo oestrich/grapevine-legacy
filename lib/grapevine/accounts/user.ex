@@ -25,6 +25,8 @@ defmodule Grapevine.Accounts.User do
     |> trim(:email)
     |> check_username_against_block_list()
     |> validate_required([:username, :email])
+    |> validate_format(:username, ~r/^[a-zA-Z0-9 -]+$/)
+    |> validate_length(:username, min: 3, max: 50)
     |> validate_format(:email, ~r/.+@.+\..+/)
     |> ensure(:token, UUID.uuid4())
     |> hash_password()

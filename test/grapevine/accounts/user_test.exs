@@ -33,5 +33,21 @@ defmodule Grapevine.Accounts.UserTest do
 
       assert Keyword.has_key?(changeset.errors, :username)
     end
+
+    test "validates username characters", %{user: user} do
+      changeset = User.changeset(user, %{username: "user@game"})
+      assert Keyword.has_key?(changeset.errors, :username)
+
+      changeset = User.changeset(user, %{username: "user-name"})
+      refute Keyword.has_key?(changeset.errors, :username)
+    end
+
+    test "validates username length", %{user: user} do
+      changeset = User.changeset(user, %{username: "user"})
+      refute Keyword.has_key?(changeset.errors, :username)
+
+      changeset = User.changeset(user, %{username: "this-is-a-very-long-username-who-wants-it-this-long"})
+      assert Keyword.has_key?(changeset.errors, :username)
+    end
   end
 end
