@@ -5,6 +5,8 @@ defmodule Grapevine.GossipCallback do
   Plugs into the gossip network.
   """
 
+  require Logger
+
   @behaviour Gossip.Client
 
   @impl true
@@ -17,7 +19,9 @@ defmodule Grapevine.GossipCallback do
   def players(), do: ["system"]
 
   @impl true
-  def message_broadcast(_message), do: :ok
+  def message_broadcast(message) do
+    Logger.info(inspect(message))
+  end
 
   @impl true
   def player_sign_in(_game_name, _player_name), do: :ok
