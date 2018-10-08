@@ -20,7 +20,11 @@ defmodule Web.Plugs.FetchUser do
   end
 
   defp load_user(conn, {:ok, user}) do
-    conn |> assign(:current_user, user)
+    token = Phoenix.Token.sign(conn, "user socket", user.id)
+
+    conn
+    |> assign(:current_user, user)
+    |> assign(:user_token, token)
   end
 
   defp load_user(conn, _), do: conn

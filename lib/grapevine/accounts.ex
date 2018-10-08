@@ -6,6 +6,7 @@ defmodule Grapevine.Accounts do
   alias Grapevine.Accounts.User
   alias Grapevine.Repo
 
+  @type id :: integer()
   @type username :: String.t()
   @type user_params :: map()
   @type token :: String.t()
@@ -32,6 +33,20 @@ defmodule Grapevine.Accounts do
   @spec from_token(token()) :: {:ok, User.t()} | {:error, :not_found}
   def from_token(token) do
     case Repo.get_by(User, token: token) do
+      nil ->
+        {:error, :not_found}
+
+      user ->
+        {:ok, user}
+    end
+  end
+
+  @doc """
+  Get a user by id
+  """
+  @spec get(id()) :: {:ok, User.t()} | {:error, :not_found}
+  def get(id) do
+    case Repo.get_by(User, id: id) do
       nil ->
         {:error, :not_found}
 

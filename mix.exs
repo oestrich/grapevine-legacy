@@ -38,7 +38,7 @@ defmodule Grapevine.Mixfile do
       {:credo, "~> 0.10", only: [:dev, :test], runtime: false},
       {:distillery, "~> 2.0", runtime: false},
       {:elixir_uuid, "~> 1.1"},
-      {:gossip, "~> 0.5"},
+      {:gossip, git: "https://github.com/oestrich/gossip-elixir.git"},
       {:phoenix, "~> 1.3.4"},
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_ecto, "~> 3.2"},

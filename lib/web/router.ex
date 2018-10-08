@@ -10,6 +10,10 @@ defmodule Web.Router do
     plug Web.Plugs.FetchUser
   end
 
+  pipeline :logged_in do
+    plug Web.Plugs.EnsureUser
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -24,8 +28,9 @@ defmodule Web.Router do
     resources("/sign-in", SessionController, only: [:new, :create, :delete], singleton: true)
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", Web do
-  #   pipe_through :api
-  # end
+  scope "/", Web do
+    pipe_through([:browser, :logged_in])
+
+    resources("/chat", ChatController, only: [:index])
+  end
 end
