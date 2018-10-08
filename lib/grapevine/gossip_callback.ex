@@ -38,6 +38,10 @@ defmodule Grapevine.GossipCallback do
   def tell_received(_from_game, _from_player, _to_player, _message), do: :ok
 
   defmodule SystemCallback do
+    @moduledoc """
+    System callback module, the application level events
+    """
+
     @behaviour Gossip.Client.SystemCallback
 
     alias Grapevine.Channels
