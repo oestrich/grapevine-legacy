@@ -21,6 +21,8 @@ defmodule Grapevine.GossipCallback do
   @impl true
   def message_broadcast(message) do
     Logger.info(inspect(message))
+
+    Web.Endpoint.broadcast("chat:#{message.channel}", "broadcast", Map.from_struct(message))
   end
 
   @impl true
@@ -40,20 +42,29 @@ defmodule Grapevine.GossipCallback do
 
     alias Grapevine.Channels
 
-    def process(event = %{"event" => "sync/channels"}) do
+    def process(state, event = %{"event" => "sync/channels"}) do
       with {:ok, payload} <- Map.fetch(event, "payload"),
            {:ok, channels} <- Map.fetch(payload, "channels") do
         Channels.cache_remote(channels)
-      end
 
-      :ok
+        channels = Enum.reduce(channels, state.channels, fn channel, channels ->
+          [channel["name"] | channels]
+        end)
+        channels = Enum.uniq(channels)
+
+        {:ok, %{state | channels: channels}}
+      else
+        _ ->
+          {:ok, state}
+      end
     end
 
-    def process(event) do
+    def process(state, event) do
       Logger.debug(fn ->
         "Received a new event - #{inspect(event)}"
       end)
-      :ok
+
+      {:ok, state}
     end
   end
 end

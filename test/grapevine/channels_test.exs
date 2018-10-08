@@ -9,7 +9,7 @@ defmodule Grapevine.ChannelsTest do
         %{"id" => 1, "name" => "gossip", "description" => nil, "hidden" => true}
       ])
 
-      assert length(Channels.all()) == 1
+      assert length(Channels.all(include_hidden: true)) == 1
     end
 
     test "creates local copies, handles updates" do
@@ -21,7 +21,7 @@ defmodule Grapevine.ChannelsTest do
         %{"id" => 1, "name" => "gossip", "description" => "updated", "hidden" => true}
       ])
 
-      assert length(Channels.all()) == 1
+      assert length(Channels.all(include_hidden: true)) == 1
 
       {:ok, channel} = Channels.get("gossip")
       assert channel.description == "updated"

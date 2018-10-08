@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
   </head>
 
-  <body id="body">
+  <body id="body" data-user-token="<%= @conn |> user_token() %>">
     <header>
       <nav class="navbar navbar-expand-md">
         <div class="container">
@@ -26,6 +26,9 @@
           <div class="collapse navbar-collapse" id="navbarLinks">
             <ul class="navbar-nav ml-auto">
               <%= if Map.get(assigns, :current_user) do %>
+                <li class="nav-item">
+                  <%= link("Chat", to: chat_path(@conn, :index), class: "nav-link") %>
+                </li>
                 <li class="nav-item">
                   <%= link("Sign Out", to: session_path(@conn, :delete), method: :delete, class: "nav-link") %>
                 </li>

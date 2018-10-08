@@ -3,15 +3,31 @@ defmodule Grapevine.Channels do
   Sync Gossip channels
   """
 
+  import Ecto.Query
+
   alias Grapevine.Channels.Channel
   alias Grapevine.Repo
+
+  @type opts :: Keyword.t()
 
   @doc """
   Get all channels
   """
-  @spec all() :: [Channel.t()]
-  def all() do
-    Repo.all(Channel)
+  @spec all(opts()) :: [Channel.t()]
+  def all(opts \\ []) do
+    Channel
+    |> maybe_include_hidden(opts)
+    |> Repo.all()
+  end
+
+  defp maybe_include_hidden(query, opts) do
+    case Keyword.get(opts, :include_hidden, false) do
+      true ->
+        query
+
+      false ->
+        query |> where([c], c.hidden == false)
+    end
   end
 
   @doc """
