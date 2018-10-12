@@ -45,6 +45,7 @@ defmodule Grapevine.GossipCallback do
     @behaviour Gossip.Client.SystemCallback
 
     alias Grapevine.Channels
+    alias Grapevine.Games
 
     def process(state, event = %{"event" => "sync/channels"}) do
       with {:ok, payload} <- Map.fetch(event, "payload"),
@@ -61,6 +62,15 @@ defmodule Grapevine.GossipCallback do
         _ ->
           {:ok, state}
       end
+    end
+
+    def process(state, event = %{"event" => "sync/games"}) do
+      with {:ok, payload} <- Map.fetch(event, "payload"),
+           {:ok, games} <- Map.fetch(payload, "games") do
+        Games.cache_remote(games)
+      end
+
+      {:ok, state}
     end
 
     def process(state, event) do
