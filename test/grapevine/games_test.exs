@@ -48,16 +48,16 @@ defmodule Grapevine.GamesTest do
 
     test "updates connections" do
       game = %{
-          "id" => 1,
-          "game" => "gossip",
-          "display_name" => "Gossip",
-          "display" => true,
-          "connections" => [
-            %{"type" => "web", "url" => "https://example.com/play"},
-            %{"type" => "telnet", "host" => "example.com", "port" => 4000},
-            %{"type" => "secure telnet", "host" => "example.com", "port" => 4000},
-          ]
-        }
+        "id" => 1,
+        "game" => "gossip",
+        "display_name" => "Gossip",
+        "display" => true,
+        "connections" => [
+          %{"type" => "web", "url" => "https://example.com/play"},
+          %{"type" => "telnet", "host" => "example.com", "port" => 4000},
+          %{"type" => "secure telnet", "host" => "example.com", "port" => 4000},
+        ]
+      }
 
       :ok = Games.cache_remote([game])
       :ok = Games.cache_remote([game])
