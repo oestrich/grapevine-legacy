@@ -6,7 +6,7 @@ defmodule Grapevine.GamesTest do
   describe "sync remote games" do
     test "creates local copies" do
       :ok = Games.cache_remote([
-        %{"id" => 1, "game" => "gossip", "display_name" => "Gossip"}
+        %{"id" => 1, "game" => "gossip", "display_name" => "Gossip", "display" => true}
       ])
 
       assert length(Games.all()) == 1
@@ -14,11 +14,11 @@ defmodule Grapevine.GamesTest do
 
     test "creates local copies, handles updates" do
       :ok = Games.cache_remote([
-        %{"id" => 1, "game" => "gossip", "display_name" => "Gossip"}
+        %{"id" => 1, "game" => "gossip", "display_name" => "Gossip", "display" => true}
       ])
 
       :ok = Games.cache_remote([
-        %{"id" => 1, "game" => "gossip", "display_name" => "Updated"}
+        %{"id" => 1, "game" => "gossip", "display_name" => "Updated", "display" => true}
       ])
 
       assert length(Games.all()) == 1
@@ -33,6 +33,7 @@ defmodule Grapevine.GamesTest do
           "id" => 1,
           "game" => "gossip",
           "display_name" => "Gossip",
+          "display" => true,
           "connections" => [
             %{"type" => "web", "url" => "https://example.com/play"},
             %{"type" => "telnet", "host" => "example.com", "port" => 4000},
@@ -50,6 +51,7 @@ defmodule Grapevine.GamesTest do
           "id" => 1,
           "game" => "gossip",
           "display_name" => "Gossip",
+          "display" => true,
           "connections" => [
             %{"type" => "web", "url" => "https://example.com/play"},
             %{"type" => "telnet", "host" => "example.com", "port" => 4000},
