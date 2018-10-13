@@ -49,7 +49,7 @@ defmodule Grapevine.Games do
   Get a game by name
   """
   def get_by_name(name) do
-    case Repo.get_by(Game, name: name) do
+    case Repo.get_by(Game, short_name: name) do
       nil ->
         {:error, :not_found}
 

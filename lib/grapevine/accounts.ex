@@ -10,12 +10,22 @@ defmodule Grapevine.Accounts do
   @type username :: String.t()
   @type user_params :: map()
   @type token :: String.t()
+  @type registration_key :: UUID.t()
 
   @doc """
   Start a new user
   """
   @spec new() :: Ecto.Changeset.t()
   def new(), do: %User{} |> User.changeset(%{})
+
+  @doc """
+  Profile id for a user
+
+  www-form encoded username
+  """
+  def profile_id(user) do
+    URI.encode_www_form(user.username)
+  end
 
   @doc """
   Register a new user
@@ -58,15 +68,38 @@ defmodule Grapevine.Accounts do
   @doc """
   Get a user by name
   """
-  @spec get(username()) :: {:ok, User.t()} | {:error, :not_found}
+  @spec get_by_username(username()) :: {:ok, User.t()} | {:error, :not_found}
   def get_by_username(username) do
     case Repo.get_by(User, username: username) do
       nil ->
         {:error, :not_found}
 
       user ->
-        {:ok, user}
+        {:ok, preload(user)}
     end
+  end
+
+  @doc """
+  Get a user by their registration key
+  """
+  @spec get_by_registration_key(registration_key()) :: {:ok, User.t()} | {:error, :not_found}
+  def get_by_registration_key(key) do
+    with {:ok, key} <- Ecto.UUID.cast(key) do
+      case Repo.get_by(User, registration_key: key) do
+        nil ->
+          {:error, :not_found}
+
+        user ->
+          {:ok, user}
+      end
+    else
+      _ ->
+        {:error, :not_found}
+    end
+  end
+
+  defp preload(user) do
+    Repo.preload(user, [characters: [:game]])
   end
 
   @doc """

@@ -33,6 +33,12 @@ defmodule Web.Router do
   scope "/", Web do
     pipe_through([:browser, :logged_in])
 
+    resources("/characters", CharacterController, only: []) do
+      post("/approve", CharacterController, :approve, as: :action)
+
+      post("/deny", CharacterController, :deny, as: :action)
+    end
+
     resources("/chat", ChatController, only: [:index])
   end
 
