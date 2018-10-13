@@ -48,31 +48,14 @@ defmodule Grapevine.GossipCallback do
 
     @behaviour Gossip.Client.SystemCallback
 
-    alias Backbone.Channels
-    alias Backbone.Games
+    alias Backbone.Sync
 
     def process(state, event = %{"event" => "sync/channels"}) do
-      with {:ok, payload} <- Map.fetch(event, "payload"),
-           {:ok, channels} <- Map.fetch(payload, "channels") do
-        Channels.cache_remote(channels)
-
-        channels = Enum.reduce(channels, state.channels, fn channel, channels ->
-          [channel["name"] | channels]
-        end)
-        channels = Enum.uniq(channels)
-
-        {:ok, %{state | channels: channels}}
-      else
-        _ ->
-          {:ok, state}
-      end
+      Sync.sync_channels(state, event)
     end
 
     def process(state, event = %{"event" => "sync/games"}) do
-      with {:ok, payload} <- Map.fetch(event, "payload"),
-           {:ok, games} <- Map.fetch(payload, "games") do
-        Games.cache_remote(games)
-      end
+      Sync.sync_games(event)
 
       {:ok, state}
     end
