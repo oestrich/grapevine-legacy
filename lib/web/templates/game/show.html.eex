@@ -1,0 +1,54 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><%= link("Home", to: page_path(@conn, :index)) %></li>
+    <li class="breadcrumb-item"><%= link("Games", to: game_path(@conn, :index)) %></li>
+    <li class="breadcrumb-item active" aria-current="page"><%= @game.name %></li>
+  </ol>
+</nav>
+
+<h3><%= @game.name %></h3>
+
+<div class="row">
+  <div class="col-md-6">
+    <%= if @game.homepage_url do %>
+      <p><%= link(@game.homepage_url, to: @game.homepage_url) %></p>
+    <% end %>
+
+    <%= if @game.description do %>
+      <p><%= text_to_html(@game.description) %></p>
+    <% end %>
+
+    <%= unless Enum.empty?(@game.connections) do %>
+      <h4>Ways to Connect</h4>
+
+      <%= Enum.map(@game.connections, fn connection -> %>
+        <%= render("_connection.html", %{connection: connection}) %>
+      <% end) %>
+    <% end %>
+  </div>
+
+  <div class="col-md-6">
+    <h5>Extra info</h5>
+
+    <table class="table">
+      <tbody>
+        <tr>
+          <th>Gossip Name</th>
+          <td><%= @game.short_name %></td>
+        </tr>
+        <%= if @game.user_agent do %>
+          <tr>
+            <th>Server</th>
+            <td><%= @game.user_agent %></td>
+          </tr>
+        <% end %>
+        <%= if @game.user_agent_repo_url do %>
+          <tr>
+            <th>Server URL</th>
+            <td><%= link(@game.user_agent_repo_url, to: @game.user_agent_repo_url, target: "_blank") %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

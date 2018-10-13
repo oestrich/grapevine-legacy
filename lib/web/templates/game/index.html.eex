@@ -1,0 +1,21 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><%= link("Home", to: page_path(@conn, :index)) %></li>
+    <li class="breadcrumb-item active" aria-current="page">Games</li>
+  </ol>
+</nav>
+
+<table class="table">
+  <thead>
+    <th scope="col">Name</th>
+    <th scope="col">Server</th>
+  </thead>
+  <tbody>
+    <%= Enum.map(@games, fn game -> %>
+      <tr>
+        <td><%= link(game.name, to: game_path(@conn, :show, game.id)) %></td>
+        <td><%= game.user_agent %></td>
+      </tr>
+    <% end) %>
+  </tbody>
+</table>

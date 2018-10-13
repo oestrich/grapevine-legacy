@@ -3,20 +3,52 @@ defmodule Grapevine.Games do
   Context for caching remote games from Gossip
   """
 
+  @type opts :: Keyword.t()
+
   alias Grapevine.Games.Game
   alias Grapevine.RemoteSchema
   alias Grapevine.Repo
 
+  import Ecto.Query
+
   @doc """
   Get all games
   """
-  @spec all() :: [Game.t()]
-  def all(), do: Repo.all(Game)
+  @spec all(opts()) :: [Game.t()]
+  def all(opts \\ []) do
+    Game
+    |> order_by([g], g.id)
+    |> maybe_include_hidden(opts)
+    |> Repo.all()
+  end
+
+  defp maybe_include_hidden(query, opts) do
+    case Keyword.get(opts, :include_hidden, false) do
+      false ->
+        query |> where([g], g.display == true)
+
+      true ->
+        query
+    end
+  end
 
   @doc """
   Get a game by name
   """
-  def get(name) do
+  def get(id, opts \\ []) do
+    case Repo.get_by(Game, Keyword.merge(opts, [id: id])) do
+      nil ->
+        {:error, :not_found}
+
+      game ->
+        {:ok, game}
+    end
+  end
+
+  @doc """
+  Get a game by name
+  """
+  def get_by_name(name) do
     case Repo.get_by(Game, name: name) do
       nil ->
         {:error, :not_found}

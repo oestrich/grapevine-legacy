@@ -23,6 +23,8 @@ defmodule Web.Router do
 
     get "/", PageController, :index
 
+    resources("/games", GameController, only: [:index, :show])
+
     resources("/register", RegistrationController, only: [:new, :create])
 
     resources("/sign-in", SessionController, only: [:new, :create, :delete], singleton: true)
