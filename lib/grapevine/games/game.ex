@@ -13,7 +13,7 @@ defmodule Grapevine.Games.Game do
     field(:short_name, :string)
     field(:display, :boolean)
     field(:user_agent, :string)
-    field(:user_agent_repo_url, :string)
+    field(:user_agent_url, :string)
     field(:description, :string)
     field(:homepage_url, :string)
 
@@ -24,7 +24,7 @@ defmodule Grapevine.Games.Game do
 
   def changeset(struct, params) do
     struct
-    |> cast(params, [:remote_id, :name, :short_name, :display, :user_agent, :user_agent_repo_url, :description, :homepage_url])
+    |> cast(params, [:remote_id, :name, :short_name, :display, :user_agent, :user_agent_url, :description, :homepage_url])
     |> cast_embed(:connections, with: &Connection.changeset/2)
     |> validate_required([:remote_id, :name, :short_name, :display, :connections])
   end

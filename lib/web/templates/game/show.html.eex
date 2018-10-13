@@ -42,10 +42,10 @@
             <td><%= @game.user_agent %></td>
           </tr>
         <% end %>
-        <%= if @game.user_agent_repo_url do %>
+        <%= if @game.user_agent_url do %>
           <tr>
             <th>Server URL</th>
-            <td><%= link(@game.user_agent_repo_url, to: @game.user_agent_repo_url, target: "_blank") %></td>
+            <td><%= link(@game.user_agent_url, to: @game.user_agent_url, target: "_blank") %></td>
           </tr>
         <% end %>
       </tbody>
