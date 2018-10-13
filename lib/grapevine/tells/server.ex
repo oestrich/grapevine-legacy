@@ -24,11 +24,16 @@ defmodule Grapevine.Tells.Server do
     key = String.trim(String.replace(message, "register", ""))
 
     with {:ok, game} <- Games.get_by_name(from_game),
+         {:ok, game} <- check_allowed_to_register(game),
          {:ok, user} <- get_user_by_key(key),
          {:ok, _character} <- start_registration(user, game, from_player) do
       message = "User registration initiated. Check your profile to complete registration!"
       @gossip.send_tell("system", game.short_name, from_player, message)
     else
+      {:error, :cannot_register} ->
+        message = "Your game does not allow registering characters on Grapevine. Sorry :("
+        @gossip.send_tell("system", from_game, from_player, message)
+
       {:error, :unknown_key} ->
         @gossip.send_tell("system", from_game, from_player, "Unknown registration key.")
 
@@ -38,6 +43,16 @@ defmodule Grapevine.Tells.Server do
 
       _ ->
         @gossip.send_tell("system", from_game, from_player, "An unknown error occurred. Please try again")
+    end
+  end
+
+  defp check_allowed_to_register(game) do
+    case game.allow_character_registration do
+      true ->
+        {:ok, game}
+
+      false ->
+        {:error, :cannot_register}
     end
   end
 

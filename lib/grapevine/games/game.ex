@@ -16,15 +16,28 @@ defmodule Grapevine.Games.Game do
     field(:user_agent_url, :string)
     field(:description, :string)
     field(:homepage_url, :string)
+    field(:allow_character_registration, :boolean)
 
     embeds_many(:connections, Connection, on_replace: :delete)
 
     timestamps()
   end
 
+  @fields [
+    :remote_id,
+    :name,
+    :short_name,
+    :display,
+    :user_agent,
+    :user_agent_url,
+    :description,
+    :homepage_url,
+    :allow_character_registration
+  ]
+
   def changeset(struct, params) do
     struct
-    |> cast(params, [:remote_id, :name, :short_name, :display, :user_agent, :user_agent_url, :description, :homepage_url])
+    |> cast(params, @fields)
     |> cast_embed(:connections, with: &Connection.changeset/2)
     |> validate_required([:remote_id, :name, :short_name, :display, :connections])
   end

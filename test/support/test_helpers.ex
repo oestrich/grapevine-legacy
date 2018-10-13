@@ -23,6 +23,7 @@ defmodule Grapevine.TestHelpers do
       "game" => "gossip",
       "display_name" => "Updated",
       "display" => true,
+      "allow_character_registration" => true,
     }, attributes)
 
     Games.cache_remote([attributes])
