@@ -1,12 +1,14 @@
-defmodule Grapevine.Channels do
+defmodule Backbone.Channels do
   @moduledoc """
   Sync Gossip channels
   """
 
   import Ecto.Query
 
-  alias Grapevine.Channels.Channel
-  alias Grapevine.Repo
+  alias Backbone.Channels.Channel
+  alias Backbone.RemoteSchema
+
+  @repo Grapevine.Repo
 
   @type opts :: Keyword.t()
 
@@ -17,7 +19,7 @@ defmodule Grapevine.Channels do
   def all(opts \\ []) do
     Channel
     |> maybe_include_hidden(opts)
-    |> Repo.all()
+    |> @repo.all()
   end
 
   defp maybe_include_hidden(query, opts) do
@@ -34,7 +36,7 @@ defmodule Grapevine.Channels do
   Get a channel by name
   """
   def get(name) do
-    case Repo.get_by(Channel, name: name) do
+    case @repo.get_by(Channel, name: name) do
       nil ->
         {:error, :not_found}
 
@@ -57,21 +59,20 @@ defmodule Grapevine.Channels do
   defp cache_channel(attributes) do
     remote_id = Map.get(attributes, "id")
 
-    attributes =
-      attributes
-      |> Map.put("remote_id", remote_id)
-      |> Map.delete("id")
+    attributes = RemoteSchema.map_fields(attributes, %{
+      "id" => "remote_id"
+    })
 
-    case Repo.get_by(Channel, remote_id: remote_id) do
+    case @repo.get_by(Channel, remote_id: remote_id) do
       nil ->
         %Channel{}
         |> Channel.changeset(attributes)
-        |> Repo.insert()
+        |> @repo.insert()
 
       channel ->
         channel
         |> Channel.changeset(attributes)
-        |> Repo.update()
+        |> @repo.update()
     end
   end
 end

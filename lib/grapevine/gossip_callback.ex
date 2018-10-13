@@ -48,8 +48,8 @@ defmodule Grapevine.GossipCallback do
 
     @behaviour Gossip.Client.SystemCallback
 
-    alias Grapevine.Channels
-    alias Grapevine.Games
+    alias Backbone.Channels
+    alias Backbone.Games
 
     def process(state, event = %{"event" => "sync/channels"}) do
       with {:ok, payload} <- Map.fetch(event, "payload"),

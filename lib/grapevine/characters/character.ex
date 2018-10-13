@@ -6,7 +6,7 @@ defmodule Grapevine.Characters.Character do
   use Grapevine.Schema
 
   alias Grapevine.Accounts.User
-  alias Grapevine.Games.Game
+  alias Backbone.Games.Game
 
   schema "characters" do
     field(:name, :string)

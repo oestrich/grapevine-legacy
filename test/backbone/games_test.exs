@@ -1,7 +1,7 @@
-defmodule Grapevine.GamesTest do
+defmodule Backbone.GamesTest do
   use Grapevine.DataCase
 
-  alias Grapevine.Games
+  alias Backbone.Games
 
   describe "sync remote games" do
     test "creates local copies" do

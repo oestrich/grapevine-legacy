@@ -1,7 +1,7 @@
-defmodule Grapevine.ChannelsTest do
+defmodule Backbone.ChannelsTest do
   use Grapevine.DataCase
 
-  alias Grapevine.Channels
+  alias Backbone.Channels
 
   describe "sync remote channels" do
     test "creates local copies" do

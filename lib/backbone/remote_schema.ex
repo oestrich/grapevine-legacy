@@ -1,4 +1,4 @@
-defmodule Grapevine.RemoteSchema do
+defmodule Backbone.RemoteSchema do
   @moduledoc """
   Functions for dealing with remote schemas from Gossip
   """

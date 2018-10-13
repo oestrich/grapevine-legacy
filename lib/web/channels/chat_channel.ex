@@ -5,7 +5,7 @@ defmodule Web.ChatChannel do
 
   use Phoenix.Channel
 
-  alias Grapevine.Channels
+  alias Backbone.Channels
 
   def join("chat:" <> channel, _message, socket) do
     case Map.has_key?(socket.assigns, :user) do

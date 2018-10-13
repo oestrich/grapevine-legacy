@@ -2,7 +2,7 @@ defmodule Grapevine.TestHelpers do
   @moduledoc false
 
   alias Grapevine.Accounts
-  alias Grapevine.Games
+  alias Backbone.Games
 
   def create_user(attributes \\ %{}) do
     attributes = Map.merge(%{

@@ -1,9 +1,9 @@
-defmodule Grapevine.Channels.Channel do
+defmodule Backbone.Channels.Channel do
   @moduledoc """
   Schema for channels
   """
 
-  use Grapevine.Schema
+  use Backbone.Schema
 
   schema "channels" do
     field(:remote_id, :integer)

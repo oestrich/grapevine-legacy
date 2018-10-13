@@ -1,7 +1,7 @@
 defmodule Web.GameController do
   use Web, :controller
 
-  alias Grapevine.Games
+  alias Backbone.Games
 
   action_fallback(Web.FallbackController)
 

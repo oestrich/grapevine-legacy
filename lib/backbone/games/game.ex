@@ -1,11 +1,11 @@
-defmodule Grapevine.Games.Game do
+defmodule Backbone.Games.Game do
   @moduledoc """
   Schema for remote games
   """
 
-  use Grapevine.Schema
+  use Backbone.Schema
 
-  alias Grapevine.Games.Connection
+  alias Backbone.Games.Connection
 
   schema "games" do
     field(:remote_id, :integer)

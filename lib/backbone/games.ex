@@ -1,15 +1,16 @@
-defmodule Grapevine.Games do
+defmodule Backbone.Games do
   @moduledoc """
   Context for caching remote games from Gossip
   """
 
   @type opts :: Keyword.t()
 
-  alias Grapevine.Games.Game
-  alias Grapevine.RemoteSchema
-  alias Grapevine.Repo
+  alias Backbone.Games.Game
+  alias Backbone.RemoteSchema
 
   import Ecto.Query
+
+  @repo Grapevine.Repo
 
   @doc """
   Get all games
@@ -19,7 +20,7 @@ defmodule Grapevine.Games do
     Game
     |> order_by([g], g.name)
     |> maybe_include_hidden(opts)
-    |> Repo.all()
+    |> @repo.all()
   end
 
   defp maybe_include_hidden(query, opts) do
@@ -36,7 +37,7 @@ defmodule Grapevine.Games do
   Get a game by name
   """
   def get(id, opts \\ []) do
-    case Repo.get_by(Game, Keyword.merge(opts, [id: id])) do
+    case @repo.get_by(Game, Keyword.merge(opts, [id: id])) do
       nil ->
         {:error, :not_found}
 
@@ -49,7 +50,7 @@ defmodule Grapevine.Games do
   Get a game by name
   """
   def get_by_name(name, opts \\ []) do
-    case Repo.get_by(Game, Keyword.merge(opts, [short_name: name])) do
+    case @repo.get_by(Game, Keyword.merge(opts, [short_name: name])) do
       nil ->
         {:error, :not_found}
 
@@ -78,16 +79,16 @@ defmodule Grapevine.Games do
       "display_name" => "name",
     })
 
-    case Repo.get_by(Game, remote_id: remote_id) do
+    case @repo.get_by(Game, remote_id: remote_id) do
       nil ->
         %Game{}
         |> Game.changeset(attributes)
-        |> Repo.insert()
+        |> @repo.insert()
 
       game ->
         game
         |> Game.changeset(attributes)
-        |> Repo.update()
+        |> @repo.update()
     end
   end
 end

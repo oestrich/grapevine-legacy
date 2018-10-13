@@ -1,9 +1,9 @@
-defmodule Grapevine.Games.Connection do
+defmodule Backbone.Games.Connection do
   @moduledoc """
   Embedded schema for a connection
   """
 
-  use Grapevine.Schema
+  use Backbone.Schema
 
   embedded_schema do
     field(:type, :string)

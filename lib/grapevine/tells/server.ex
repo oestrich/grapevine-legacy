@@ -5,7 +5,7 @@ defmodule Grapevine.Tells.Server do
 
   alias Grapevine.Accounts
   alias Grapevine.Characters
-  alias Grapevine.Games
+  alias Backbone.Games
 
   @gossip Application.get_env(:grapevine, :gossip)[:module]
 
