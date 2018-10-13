@@ -17,3 +17,5 @@ config :grapevine, Grapevine.Repo,
   pool: Ecto.Adapters.SQL.Sandbox
 
 config :bcrypt_elixir, :log_rounds, 4
+
+config :grapevine, :gossip, module: Test.Gossip

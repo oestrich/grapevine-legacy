@@ -7,6 +7,8 @@ defmodule Grapevine.GossipCallback do
 
   require Logger
 
+  alias Grapevine.Tells
+
   @behaviour Gossip.Client
 
   @impl true
@@ -35,7 +37,9 @@ defmodule Grapevine.GossipCallback do
   def players_status(_game_name, _player_names), do: :ok
 
   @impl true
-  def tell_received(_from_game, _from_player, _to_player, _message), do: :ok
+  def tell_received(from_game, from_player, to_player, message) do
+    Tells.tell_received(from_game, from_player, to_player, message)
+  end
 
   defmodule SystemCallback do
     @moduledoc """

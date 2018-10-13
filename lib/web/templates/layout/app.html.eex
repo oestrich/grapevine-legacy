@@ -33,6 +33,9 @@
                   <%= link("Chat", to: chat_path(@conn, :index), class: "nav-link") %>
                 </li>
                 <li class="nav-item">
+                  <%= link("Your Profile", to: profile_path(@conn, :show, profile_id(@current_user)), class: "nav-link") %>
+                </li>
+                <li class="nav-item">
                   <%= link("Sign Out", to: session_path(@conn, :delete), method: :delete, class: "nav-link") %>
                 </li>
               <% else %>

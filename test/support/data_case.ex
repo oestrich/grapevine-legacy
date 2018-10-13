@@ -33,6 +33,8 @@ defmodule Grapevine.DataCase do
       Ecto.Adapters.SQL.Sandbox.mode(Grapevine.Repo, {:shared, self()})
     end
 
+    start_supervised(Test.Gossip)
+
     :ok
   end
 

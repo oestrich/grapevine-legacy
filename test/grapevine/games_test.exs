@@ -23,8 +23,8 @@ defmodule Grapevine.GamesTest do
 
       assert length(Games.all()) == 1
 
-      {:ok, game} = Games.get_by_name("Updated")
-      assert game.short_name == "gossip"
+      {:ok, game} = Games.get_by_name("gossip")
+      assert game.name == "Updated"
     end
 
     test "copies connections over" do
@@ -42,7 +42,7 @@ defmodule Grapevine.GamesTest do
         }
       ])
 
-      {:ok, game} = Games.get_by_name("Gossip")
+      {:ok, game} = Games.get_by_name("gossip")
       assert length(game.connections) == 3
     end
 
@@ -62,7 +62,7 @@ defmodule Grapevine.GamesTest do
       :ok = Games.cache_remote([game])
       :ok = Games.cache_remote([game])
 
-      {:ok, game} = Games.get_by_name("Gossip")
+      {:ok, game} = Games.get_by_name("gossip")
       assert length(game.connections) == 3
     end
   end
