@@ -17,7 +17,7 @@ defmodule Grapevine.Games do
   @spec all(opts()) :: [Game.t()]
   def all(opts \\ []) do
     Game
-    |> order_by([g], g.id)
+    |> order_by([g], g.name)
     |> maybe_include_hidden(opts)
     |> Repo.all()
   end
