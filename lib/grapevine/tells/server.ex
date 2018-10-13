@@ -11,7 +11,7 @@ defmodule Grapevine.Tells.Server do
 
   def system_tell(from_game, from_player, message) do
     case String.downcase(String.trim(message)) do
-      "register" <> _->
+      "register" <> _ ->
         register_character(from_game, from_player, message)
 
       _ ->
