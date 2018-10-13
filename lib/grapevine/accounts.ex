@@ -56,6 +56,20 @@ defmodule Grapevine.Accounts do
   end
 
   @doc """
+  Get a user by name
+  """
+  @spec get(username()) :: {:ok, User.t()} | {:error, :not_found}
+  def get_by_username(username) do
+    case Repo.get_by(User, username: username) do
+      nil ->
+        {:error, :not_found}
+
+      user ->
+        {:ok, user}
+    end
+  end
+
+  @doc """
   Validate a login
   """
   @spec validate_login(String.t(), String.t()) :: {:ok, User.t()} | {:error, :invalid}

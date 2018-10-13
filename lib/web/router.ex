@@ -35,4 +35,10 @@ defmodule Web.Router do
 
     resources("/chat", ChatController, only: [:index])
   end
+
+  scope "/", Web do
+    pipe_through(:browser)
+
+    resources("/", ProfileController, only: [:show])
+  end
 end

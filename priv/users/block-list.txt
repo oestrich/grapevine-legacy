@@ -7,3 +7,7 @@ staff
 sysop
 wiz
 wizard
+games
+register
+sign-in
+chat
