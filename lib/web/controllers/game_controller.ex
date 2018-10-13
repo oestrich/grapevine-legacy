@@ -11,8 +11,8 @@ defmodule Web.GameController do
     |> render("index.html")
   end
 
-  def show(conn, %{"id" => id}) do
-    with {:ok, game} <- Games.get(id, display: true) do
+  def show(conn, %{"id" => short_name}) do
+    with {:ok, game} <- Games.get_by_name(short_name, display: true) do
       conn
       |> assign(:game, game)
       |> render("show.html")

@@ -40,5 +40,6 @@ defmodule Grapevine.Games.Game do
     |> cast(params, @fields)
     |> cast_embed(:connections, with: &Connection.changeset/2)
     |> validate_required([:remote_id, :name, :short_name, :display, :connections])
+    |> unique_constraint(:short_name, name: :games_lower_short_name_index)
   end
 end

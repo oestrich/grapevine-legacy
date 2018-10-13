@@ -23,7 +23,7 @@
         <% end %>
         <%= Enum.map(approved_characters(@user.characters), fn character -> %>
           <tr>
-            <td><%= link(character.game.name, to: game_path(@conn, :show, character.game_id)) %></td>
+            <td><%= link(character.game.name, to: game_path(@conn, :show, character.game.short_name)) %></td>
             <td><%= character.name %></td>
           </tr>
         <% end) %>
@@ -48,7 +48,7 @@
       <%= Enum.map(pending_characters(@user.characters), fn character -> %>
         <div class="card mt-3">
           <div class="card-body">
-            <h5 class="card-title"><%= link(character.game.name, to: game_path(@conn, :show, character.game_id)) %> - <%= character.name %></h5>
+            <h5 class="card-title"><%= link(character.game.name, to: game_path(@conn, :show, character.game.short_name)) %> - <%= character.name %></h5>
             <%= link("Approve", to: character_action_path(@conn, :approve, character.id), method: :post, class: "btn btn-info") %>
             <%= link("Deny", to: character_action_path(@conn, :deny, character.id), method: :post, class: "btn btn-danger") %>
           </div>
