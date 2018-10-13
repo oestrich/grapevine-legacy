@@ -11,12 +11,14 @@ defmodule Backbone.Sync do
          {:ok, channels} <- Map.fetch(payload, "channels") do
       Channels.cache_remote(channels)
 
-      channels = Enum.reduce(channels, state.channels, fn channel, channels ->
-        [channel["name"] | channels]
-      end)
-         channels = Enum.uniq(channels)
+      channels =
+        Enum.reduce(channels, state.channels, fn channel, channels ->
+          [channel["name"] | channels]
+        end)
 
-         {:ok, %{state | channels: channels}}
+      channels = Enum.uniq(channels)
+
+      {:ok, %{state | channels: channels}}
     else
       _ ->
         {:ok, state}
