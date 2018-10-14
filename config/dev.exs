@@ -49,11 +49,14 @@ config :logger, :console, format: "[$level] $message\n"
 config :phoenix, :stacktrace_depth, 20
 
 # Configure your database
-config :grapevine, Grapevine.Repo,
+database = [
   adapter: Ecto.Adapters.Postgres,
   database: "grapevine_dev",
   hostname: "localhost",
   pool_size: 10
+]
+config :grapevine, Grapevine.Repo, database
+config :backbone, Backbone.Repo, database
 
 # This is the grapevine keys that gossip has in its seeds
 config :gossip, :url, "ws://localhost:4001/socket"

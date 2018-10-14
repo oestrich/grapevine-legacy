@@ -8,7 +8,7 @@ use Mix.Config
 # General application configuration
 config :grapevine,
   namespace: Web,
-  ecto_repos: [Grapevine.Repo]
+  ecto_repos: [Backbone.Repo, Grapevine.Repo]
 
 # Configures the endpoint
 config :grapevine, Web.Endpoint,
@@ -27,6 +27,8 @@ config :gossip, :callback_module, Grapevine.GossipCallback
 config :gossip, :system_module, Grapevine.GossipCallback.SystemCallback
 
 config :grapevine, :gossip, module: Gossip
+
+config :backbone, :repo, Backbone.Repo
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

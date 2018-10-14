@@ -33,6 +33,7 @@ defmodule Grapevine.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:backbone, git: "https://github.com/oestrich/gossip-backbone.git"},
       {:bcrypt_elixir, "~> 1.0"},
       {:comeonin, "~> 4.0"},
       {:credo, "~> 0.10", only: [:dev, :test], runtime: false},

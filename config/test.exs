@@ -10,12 +10,17 @@ config :grapevine, Web.Endpoint,
 config :logger, level: :warn
 
 # Configure your database
-config :grapevine, Grapevine.Repo,
+database = [
   adapter: Ecto.Adapters.Postgres,
   database: "grapevine_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+]
+config :grapevine, Grapevine.Repo, database
+config :backbone, Backbone.Repo, database
 
 config :bcrypt_elixir, :log_rounds, 4
 
 config :grapevine, :gossip, module: Test.Gossip
+
+config :backbone, :repo, Grapevine.Repo
