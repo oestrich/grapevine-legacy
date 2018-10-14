@@ -14,6 +14,7 @@ defmodule Grapevine.ReleaseTasks do
   ]
 
   @repos [
+    Backbone.Repo,
     Grapevine.Repo
   ]
 
