@@ -1,6 +1,7 @@
 defmodule Grapevine.Tells.ServerTest do
   use Grapevine.DataCase
 
+  alias Grapevine.Accounts
   alias Grapevine.Tells.Server
   alias Test.Gossip
 
@@ -23,6 +24,17 @@ defmodule Grapevine.Tells.ServerTest do
 
       message = "User registration initiated. Check your profile to complete registration!"
       assert [{"system", "ExVenture", "player", ^message}] = Gossip.get_tells()
+    end
+
+    test "regenerates the user's key after receiving it" do
+      cache_game(%{"game" => "ExVenture"})
+
+      user = create_user()
+
+      :ok = Server.system_tell("ExVenture", "player", "register #{user.registration_key}")
+
+      {:ok, new_user} = Accounts.get(user.id)
+      assert new_user.registration_key != user.registration_key
     end
 
     test "the game disallows registration" do

@@ -59,6 +59,7 @@ defmodule Grapevine.Tells.Server do
   defp get_user_by_key(key) do
     case Accounts.get_by_registration_key(key) do
       {:ok, user} ->
+        Accounts.regenerate_registration_key(user)
         {:ok, user}
 
       {:error, :not_found} ->

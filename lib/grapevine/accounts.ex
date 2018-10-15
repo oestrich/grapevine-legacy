@@ -102,6 +102,12 @@ defmodule Grapevine.Accounts do
     Repo.preload(user, [characters: [:game]])
   end
 
+  def regenerate_registration_key(user) do
+    user
+    |> User.regen_key_changeset()
+    |> Repo.update()
+  end
+
   @doc """
   Validate a login
   """

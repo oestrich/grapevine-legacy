@@ -40,6 +40,12 @@ defmodule Grapevine.Accounts.User do
     |> unique_constraint(:email, name: :users_lower_email_index)
   end
 
+  def regen_key_changeset(struct) do
+    struct
+    |> change()
+    |> put_change(:registration_key, UUID.uuid4())
+  end
+
   defp trim(changeset, field) do
     case get_change(changeset, field) do
       nil ->

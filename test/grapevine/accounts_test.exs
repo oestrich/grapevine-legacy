@@ -17,6 +17,14 @@ defmodule Grapevine.AccountsTest do
     end
   end
 
+  describe "regenerate a registration key" do
+    test "successful" do
+      user = create_user()
+      {:ok, new_user} = Accounts.regenerate_registration_key(user)
+      assert new_user.registration_key != user.registration_key
+    end
+  end
+
   describe "verifying a password" do
     setup do
       %{user: create_user(%{password: "password"})}
