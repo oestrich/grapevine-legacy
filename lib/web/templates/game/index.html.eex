@@ -5,7 +5,7 @@
   </ol>
 </nav>
 
-<table class="table">
+<table class="table games">
   <thead>
     <th scope="col">Name</th>
     <th scope="col">Server</th>
@@ -13,7 +13,10 @@
   <tbody>
     <%= Enum.map(@games, fn game -> %>
       <tr>
-        <td><%= link(game.name, to: game_path(@conn, :show, game.short_name)) %></td>
+        <td>
+          <%= online_status(game) %>
+          <%= link(game.name, to: game_path(@conn, :show, game.short_name)) %>
+        </td>
         <td><%= game.user_agent %></td>
       </tr>
     <% end) %>
