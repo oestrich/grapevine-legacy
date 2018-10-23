@@ -12,7 +12,7 @@
   </thead>
   <tbody>
     <%= Enum.map(@games, fn game -> %>
-      <tr>
+      <tr class="game">
         <td>
           <%= online_status(game) %>
           <%= link(game.name, to: game_path(@conn, :show, game.short_name)) %>

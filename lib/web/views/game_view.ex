@@ -3,6 +3,12 @@ defmodule Web.GameView do
 
   alias Grapevine.Games
 
+  def game_online?(game), do: Games.game_online?(game)
+
+  def online_players(game) do
+    Map.get(Gossip.who(), game.short_name, [])
+  end
+
   def online_status(game) do
     case Games.game_online?(game) do
       true ->

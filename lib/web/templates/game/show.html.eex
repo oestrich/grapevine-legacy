@@ -6,7 +6,10 @@
   </ol>
 </nav>
 
-<h3><%= @game.name %></h3>
+<h3 class="game">
+  <%= online_status(@game) %>
+  <%= @game.name %>
+</h3>
 
 <div class="row">
   <div class="col-md-6">
@@ -16,6 +19,15 @@
 
     <%= if @game.description do %>
       <p><%= text_to_html(@game.description) %></p>
+    <% end %>
+
+    <%= if !Enum.empty?(online_players(@game)) do %>
+      <h4>Online Players</h4>
+      <ul>
+        <%= Enum.map(online_players(@game), fn player -> %>
+          <li><%= player %></li>
+        <% end) %>
+      </ul>
     <% end %>
 
     <%= unless Enum.empty?(@game.connections) do %>
