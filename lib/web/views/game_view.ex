@@ -12,10 +12,10 @@ defmodule Web.GameView do
   def online_status(game) do
     case Games.game_online?(game) do
       true ->
-        content_tag(:i, "", class: "fa fa-circle online")
+        content_tag(:i, "", class: "fa fa-circle online", alt: "Game Online", title: "Online")
 
       false ->
-        content_tag(:i, "", class: "fa fa-circle offline")
+        content_tag(:i, "", class: "fa fa-circle offline", alt: "Game Offline", title: "Offline")
     end
   end
 
