@@ -7,6 +7,6 @@ defmodule Grapevine.Games do
   Check if a game is online or not
   """
   def game_online?(game) do
-    Map.has_key?(Gossip.who(), game.short_name)
+    Gossip.Games.game_online?(game.short_name)
   end
 end

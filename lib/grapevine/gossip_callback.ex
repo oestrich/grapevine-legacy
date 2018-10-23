@@ -44,6 +44,12 @@ defmodule Grapevine.GossipCallback do
   @impl true
   def games_status(_game), do: :ok
 
+  @impl true
+  def game_connected(_game), do: :ok
+
+  @impl true
+  def game_disconnected(_game), do: :ok
+
   defmodule SystemCallback do
     @moduledoc """
     System callback module, the application level events
