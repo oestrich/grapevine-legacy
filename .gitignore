@@ -29,3 +29,4 @@ npm-debug.log
 
 /env.sh
 /scp.sh
+/backups
