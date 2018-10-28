@@ -27,8 +27,8 @@ config :gossip, :callback_modules,
   core: Grapevine.GossipCallback,
   players: Grapevine.GossipCallback,
   tells: Grapevine.GossipCallback,
-  games: Grapevine.GossipCallback
-config :gossip, :system_module, Grapevine.GossipCallback.SystemCallback
+  games: Grapevine.GossipCallback,
+  system: Grapevine.GossipCallback.SystemCallback
 
 config :grapevine, :gossip, module: Gossip
 
