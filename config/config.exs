@@ -32,6 +32,8 @@ config :grapevine, :errors, report: false
 
 config :backbone, :repo, Backbone.Repo
 
+config :sentry, filter: Grapevine.SentryFilter
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
