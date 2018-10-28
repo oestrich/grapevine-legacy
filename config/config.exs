@@ -28,6 +28,8 @@ config :gossip, :system_module, Grapevine.GossipCallback.SystemCallback
 
 config :grapevine, :gossip, module: Gossip
 
+config :grapevine, :errors, report: false
+
 config :backbone, :repo, Backbone.Repo
 
 # Import environment specific config. This must remain at the bottom

@@ -36,18 +36,19 @@ defmodule Grapevine.Mixfile do
       {:backbone, git: "https://github.com/oestrich/gossip-backbone.git"},
       {:bcrypt_elixir, "~> 1.0"},
       {:comeonin, "~> 4.0"},
+      {:cowboy, "~> 1.0"},
       {:credo, "~> 0.10", only: [:dev, :test], runtime: false},
       {:distillery, "~> 2.0", runtime: false},
       {:elixir_uuid, "~> 1.1"},
+      {:gettext, "~> 0.11"},
       {:gossip, git: "https://github.com/oestrich/gossip-elixir.git"},
       {:phoenix, "~> 1.3.4"},
-      {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_ecto, "~> 3.2"},
-      {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.10"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
-      {:gettext, "~> 0.11"},
-      {:cowboy, "~> 1.0"}
+      {:phoenix_pubsub, "~> 1.0"},
+      {:postgrex, ">= 0.0.0"},
+      {:sentry, "~> 6.4"}
     ]
   end
 
