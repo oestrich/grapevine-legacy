@@ -23,7 +23,11 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:user_id]
 
-config :gossip, :callback_module, Grapevine.GossipCallback
+config :gossip, :callback_modules,
+  core: Grapevine.GossipCallback,
+  players: Grapevine.GossipCallback,
+  tells: Grapevine.GossipCallback,
+  games: Grapevine.GossipCallback
 config :gossip, :system_module, Grapevine.GossipCallback.SystemCallback
 
 config :grapevine, :gossip, module: Gossip

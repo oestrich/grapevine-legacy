@@ -9,7 +9,10 @@ defmodule Grapevine.GossipCallback do
 
   alias Grapevine.Tells
 
-  @behaviour Gossip.Client
+  @behaviour Gossip.Client.Core
+  @behaviour Gossip.Client.Players
+  @behaviour Gossip.Client.Tells
+  @behaviour Gossip.Client.Games
 
   @impl true
   def user_agent(), do: Grapevine.version()
@@ -34,21 +37,21 @@ defmodule Grapevine.GossipCallback do
   def player_sign_out(_game_name, _player_name), do: :ok
 
   @impl true
-  def players_status(_game_name, _player_names), do: :ok
+  def player_update(_game_name, _player_names), do: :ok
 
   @impl true
-  def tell_received(from_game, from_player, to_player, message) do
+  def tell_receive(from_game, from_player, to_player, message) do
     Tells.tell_received(from_game, from_player, to_player, message)
   end
 
   @impl true
-  def games_status(_game), do: :ok
+  def game_update(_game), do: :ok
 
   @impl true
-  def game_connected(_game), do: :ok
+  def game_connect(_game), do: :ok
 
   @impl true
-  def game_disconnected(_game), do: :ok
+  def game_disconnect(_game), do: :ok
 
   defmodule SystemCallback do
     @moduledoc """

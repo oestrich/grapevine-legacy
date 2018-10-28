@@ -41,7 +41,7 @@ defmodule Grapevine.Mixfile do
       {:distillery, "~> 2.0", runtime: false},
       {:elixir_uuid, "~> 1.1"},
       {:gettext, "~> 0.11"},
-      {:gossip, git: "https://github.com/oestrich/gossip-elixir.git"},
+      {:gossip, "~> 1.0"},
       {:phoenix, "~> 1.3.4"},
       {:phoenix_ecto, "~> 3.2"},
       {:phoenix_html, "~> 2.10"},
