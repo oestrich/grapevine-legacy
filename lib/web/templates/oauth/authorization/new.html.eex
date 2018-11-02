@@ -2,7 +2,13 @@
   <div class="col-md-6 offset-md-3">
     <h3>Authorize <%= @client_game.name %></h3>
 
-    <p class="lead"><%= @client_game.name %> wants to connect.</p>
+    <p class="lead"><%= @client_game.name %> wants to connect with the following permissions:</p>
+
+    <ul>
+      <%= Enum.map(@authorization.scopes, fn scope -> %>
+        <li><%= render("_scope_#{scope}.html") %></li>
+      <% end) %>
+    </ul>
 
     <%= form_tag authorization_path(@conn, :update), [method: :put] do %>
       <%= hidden_input(:authorization, :id, value: @authorization.id) %>
