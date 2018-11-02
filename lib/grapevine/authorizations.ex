@@ -128,7 +128,7 @@ defmodule Grapevine.Authorizations do
     with {:ok, client_id} <- Ecto.UUID.cast(client_id),
          {:ok, game} <- Games.get_by(client_id: client_id),
          {:ok, code} <- Ecto.UUID.cast(code) do
-      case Repo.get_by(Authorization, game_id: game.id, redirect_uri: redirect_uri, code: code) do
+      case Repo.get_by(Authorization, game_id: game.id, redirect_uri: redirect_uri, code: code, active: true) do
         nil ->
           {:error, :invalid_grant}
 
