@@ -13,12 +13,12 @@ defmodule Web.Plugs.FetchUser do
   def call(conn, [api: true]) do
     case get_req_header(conn, "authorization") do
       ["Bearer " <> token] ->
-        case Authorizations.get_token(token) do
-          {:ok, access_token} ->
-            conn
-            |> assign(:access_token, access_token)
-            |> assign(:current_user, access_token.authorization.user)
-
+        with {:ok, access_token} <- Authorizations.get_token(token),
+             true <- Authorizations.valid_token?(access_token) do
+          conn
+          |> assign(:access_token, access_token)
+          |> assign(:current_user, access_token.authorization.user)
+        else
           _ ->
             conn
         end

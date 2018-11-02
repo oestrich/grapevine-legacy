@@ -124,14 +124,39 @@ defmodule Grapevine.Authorizations do
           {:error, :invalid_grant}
 
         authorization ->
-          authorization
-          |> Ecto.build_assoc(:access_tokens)
-          |> AccessToken.create_changeset()
-          |> Repo.insert()
+          create_token(authorization)
       end
     else
       _ ->
         {:error, :invalid_grant}
+    end
+  end
+
+  @doc false
+  def create_token(authorization = %Authorization{}) do
+    authorization
+    |> Ecto.build_assoc(:access_tokens)
+    |> AccessToken.create_changeset()
+    |> Repo.insert()
+  end
+
+  @doc """
+  Validate a token
+
+  A token is valid if:
+  - within expiration time
+  - authorization is active
+  """
+  def valid_token?(access_token) do
+    access_token = Repo.preload(access_token, [:authorization])
+
+    case access_token.authorization.active do
+      false ->
+        false
+
+      true ->
+        valid_til = access_token.inserted_at |> Timex.shift(seconds: access_token.expires_in)
+        Timex.before?(Timex.now(), valid_til)
     end
   end
 end
