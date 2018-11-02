@@ -14,7 +14,8 @@ defmodule Grapevine.Repo.Migrations.CreateOauthTables do
       timestamps()
     end
 
-    create table(:access_tokens) do
+    create table(:access_tokens, primary_key: false) do
+      add(:id, :uuid, primary_key: true)
       add(:authorization_id, references(:authorizations), null: false)
       add(:access_token, :uuid, null: false)
       add(:refresh_token, :uuid, null: false)

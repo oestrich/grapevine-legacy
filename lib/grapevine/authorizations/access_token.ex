@@ -9,6 +9,7 @@ defmodule Grapevine.Authorizations.AccessToken do
 
   @one_hour 60 * 60
 
+  @primary_key {:id, :binary_id, autogenerate: true}
   schema "access_tokens" do
     field(:access_token, Ecto.UUID)
     field(:refresh_token, Ecto.UUID)
