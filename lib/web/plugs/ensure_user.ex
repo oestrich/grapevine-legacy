@@ -3,6 +3,7 @@ defmodule Web.Plugs.EnsureUser do
   Verify a user is in the session
   """
 
+  import Plug.Conn
   import Phoenix.Controller
 
   alias Web.Router.Helpers, as: Routes
@@ -18,6 +19,7 @@ defmodule Web.Plugs.EnsureUser do
         conn
         |> put_flash(:info, "You must sign in first.")
         |> redirect(to: Routes.page_path(conn, :index))
+        |> halt()
     end
   end
 end

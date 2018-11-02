@@ -24,6 +24,8 @@ defmodule Grapevine.TestHelpers do
       "display_name" => "Updated",
       "display" => true,
       "allow_character_registration" => true,
+      "client_id" => UUID.uuid4(),
+      "client_secret" => UUID.uuid4(),
     }, attributes)
 
     Games.cache_remote([attributes])
