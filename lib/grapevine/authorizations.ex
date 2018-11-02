@@ -143,10 +143,18 @@ defmodule Grapevine.Authorizations do
 
   @doc false
   def create_token(authorization = %Authorization{}) do
+    with {:ok, authorization} <- mark_as_used(authorization) do
+      authorization
+      |> Ecto.build_assoc(:access_tokens)
+      |> AccessToken.create_changeset()
+      |> Repo.insert()
+    end
+  end
+
+  defp mark_as_used(authorization) do
     authorization
-    |> Ecto.build_assoc(:access_tokens)
-    |> AccessToken.create_changeset()
-    |> Repo.insert()
+    |> Authorization.used_changeset()
+    |> Repo.update()
   end
 
   @doc """

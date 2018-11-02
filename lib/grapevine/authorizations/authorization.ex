@@ -42,6 +42,12 @@ defmodule Grapevine.Authorizations.Authorization do
     |> put_change(:active, true)
   end
 
+  def used_changeset(struct) do
+    struct
+    |> change()
+    |> put_change(:code, nil)
+  end
+
   defp validate_scopes(changeset) do
     case get_field(changeset, :scopes) do
       [] ->

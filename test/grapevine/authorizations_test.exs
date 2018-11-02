@@ -124,6 +124,13 @@ defmodule Grapevine.AuthorizationsTest do
       assert access_token.access_token
     end
 
+    test "authorization code is good once", %{user: user, game: game} do
+      authorization = create_authorization(user, game)
+
+      {:ok, _access_token} = Authorizations.create_token(game.client_id, authorization.redirect_uri, authorization.code)
+      {:error, :invalid_grant} = Authorizations.create_token(game.client_id, authorization.redirect_uri, authorization.code)
+    end
+
     test "authorization is not active", %{user: user, game: game} do
       {:ok, authorization} = Authorizations.start_auth(user, game, %{
         "state" => "my+state",

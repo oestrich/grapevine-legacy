@@ -8,7 +8,7 @@ defmodule Grapevine.Repo.Migrations.CreateOauthTables do
       add(:redirect_uri, :text, null: false)
       add(:state, :text)
       add(:scopes, {:array, :text}, default: fragment("'{}'"), null: false)
-      add(:code, :uuid, null: false)
+      add(:code, :uuid)
       add(:active, :boolean, default: false, null: false)
 
       timestamps()
