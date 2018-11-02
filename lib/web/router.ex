@@ -23,10 +23,15 @@ defmodule Web.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug Web.Plugs.FetchUser, api: true
+  end
+
+  pipeline :api_authenticated do
+    plug Web.Plugs.EnsureUser, api: true
   end
 
   scope "/", Web do
-    pipe_through(:browser)
+    pipe_through([:browser])
 
     get "/", PageController, :index
 
@@ -35,6 +40,12 @@ defmodule Web.Router do
     resources("/register", RegistrationController, only: [:new, :create])
 
     resources("/sign-in", SessionController, only: [:new, :create, :delete], singleton: true)
+  end
+
+  scope "/", Web do
+    pipe_through([:api, :api_authenticated])
+
+    get("/users/me", UserController, :show)
   end
 
   scope "/", Web do

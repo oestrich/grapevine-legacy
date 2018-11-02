@@ -55,6 +55,21 @@ defmodule Grapevine.Authorizations do
     end
   end
 
+  def get_token(token) do
+    with {:ok, token} <- Ecto.UUID.cast(token) do
+      case Repo.get_by(AccessToken, access_token: token) do
+        nil ->
+          {:error, :not_found}
+
+        access_token ->
+          {:ok, Repo.preload(access_token, [authorization: [:user]])}
+      end
+    else
+      _ ->
+        {:error, :not_found}
+    end
+  end
+
   @doc """
   Authorize an authorization
 

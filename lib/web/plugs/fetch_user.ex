@@ -6,8 +6,27 @@ defmodule Web.Plugs.FetchUser do
   import Plug.Conn
 
   alias Grapevine.Accounts
+  alias Grapevine.Authorizations
 
   def init(default), do: default
+
+  def call(conn, [api: true]) do
+    case get_req_header(conn, "authorization") do
+      ["Bearer " <> token] ->
+        case Authorizations.get_token(token) do
+          {:ok, access_token} ->
+            conn
+            |> assign(:access_token, access_token)
+            |> assign(:current_user, access_token.authorization.user)
+
+          _ ->
+            conn
+        end
+
+      [] ->
+        conn
+    end
+  end
 
   def call(conn, _opts) do
     case conn |> get_session(:user_token) do
