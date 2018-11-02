@@ -23,7 +23,7 @@ defmodule Web.Plugs.FetchUser do
             conn
         end
 
-      [] ->
+      _ ->
         conn
     end
   end
