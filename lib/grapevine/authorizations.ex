@@ -14,6 +14,28 @@ defmodule Grapevine.Authorizations do
   Creates an authorization record
   """
   def start_auth(user, game, params) do
+    with {:ok, redirect_uri} <- Map.fetch(params, "redirect_uri") do
+      opts = [
+        user_id: user.id,
+        game_id: game.id,
+        redirect_uri: redirect_uri,
+        active: true,
+      ]
+
+      case Repo.get_by(Authorization, opts) do
+        nil ->
+          create_authorization(user, game, params)
+
+        authorization ->
+          {:ok, authorization}
+      end
+    else
+      _ ->
+        create_authorization(user, game, params)
+    end
+  end
+
+  defp create_authorization(user, game, params) do
     user
     |> Ecto.build_assoc(:authorizations)
     |> Authorization.create_changeset(game, params)

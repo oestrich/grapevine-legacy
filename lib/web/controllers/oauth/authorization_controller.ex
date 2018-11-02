@@ -9,9 +9,16 @@ defmodule Web.Oauth.AuthorizationController do
     %{current_user: user, client_game: game} = conn.assigns
 
     with {:ok, authorization} <- Authorizations.start_auth(user, game, params) do
-      conn
-      |> assign(:authorization, authorization)
-      |> render("new.html")
+      case authorization.active do
+        true ->
+         {:ok, uri} = Authorizations.authorized_redirect_uri(authorization)
+         conn |> redirect(external: uri)
+
+        false ->
+          conn
+          |> assign(:authorization, authorization)
+          |> render("new.html")
+      end
     end
   end
 

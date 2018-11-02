@@ -7,7 +7,7 @@ defmodule Grapevine.AuthorizationsTest do
   describe "starting to authenticate" do
     setup [:with_user, :with_game]
 
-    test "successful", %{user: user, game: game} do
+     test "successful", %{user: user, game: game} do
       {:ok, authorization} = Authorizations.start_auth(user, game, %{
         state: "my+state",
         redirect_uri: "https://example.com/oauth/callback",
@@ -16,6 +16,21 @@ defmodule Grapevine.AuthorizationsTest do
       assert authorization.state == "my+state"
       assert authorization.redirect_uri == "https://example.com/oauth/callback"
       assert authorization.scopes == []
+    end
+
+    test "reuses authorizations if one is already active", %{user: user, game: game} do
+      {:ok, authorization} = Authorizations.start_auth(user, game, %{
+        state: "my+state",
+        redirect_uri: "https://example.com/oauth/callback",
+      })
+      {:ok, authorization} = Authorizations.authorize(authorization)
+
+      {:ok, new_authorization} = Authorizations.start_auth(user, game, %{
+        "state" => "my+state",
+        "redirect_uri" => "https://example.com/oauth/callback",
+      })
+
+      assert new_authorization.id == authorization.id
     end
 
     test "missing params", %{user: user, game: game} do
