@@ -6,9 +6,10 @@ defmodule Web.Oauth.AuthorizationController do
   alias Grapevine.Authorizations
 
   def new(conn, params) do
-    %{current_user: user, client_game: game} = conn.assigns
+    %{current_user: user} = conn.assigns
 
-    with {:ok, authorization} <- Authorizations.start_auth(user, game, params) do
+    with %{client_game: game} <- conn.assigns,
+         {:ok, authorization} <- Authorizations.start_auth(user, game, params) do
       case authorization.active do
         true ->
          {:ok, uri} = Authorizations.authorized_redirect_uri(authorization)
@@ -20,7 +21,7 @@ defmodule Web.Oauth.AuthorizationController do
           |> render("new.html")
       end
     else
-      {:error, _} ->
+      _ ->
         conn
         |> put_flash(:error, "Unknown issue authenticating. Please try again")
         |> redirect(to: page_path(conn, :index))
