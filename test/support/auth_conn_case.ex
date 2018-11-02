@@ -1,4 +1,6 @@
 defmodule Web.AuthConnCase do
+  @moduledoc false
+
   defmacro __using__(_opts) do
     quote do
       use Web.ConnCase
