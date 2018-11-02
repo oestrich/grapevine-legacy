@@ -9,33 +9,43 @@ defmodule Grapevine.AuthorizationsTest do
 
      test "successful", %{user: user, game: game} do
       {:ok, authorization} = Authorizations.start_auth(user, game, %{
-        state: "my+state",
-        redirect_uri: "https://example.com/oauth/callback",
+        "state" => "my+state",
+        "redirect_uri" => "https://example.com/oauth/callback",
+        "scope" => "profile"
       })
 
       assert authorization.state == "my+state"
       assert authorization.redirect_uri == "https://example.com/oauth/callback"
-      assert authorization.scopes == []
+      assert authorization.scopes == ["profile"]
     end
 
     test "reuses authorizations if one is already active", %{user: user, game: game} do
-      {:ok, authorization} = Authorizations.start_auth(user, game, %{
-        state: "my+state",
-        redirect_uri: "https://example.com/oauth/callback",
-      })
-      {:ok, authorization} = Authorizations.authorize(authorization)
+      authorization = create_authorization(user, game)
 
       {:ok, new_authorization} = Authorizations.start_auth(user, game, %{
         "state" => "my+state",
         "redirect_uri" => "https://example.com/oauth/callback",
+        "scope" => "profile"
       })
 
       assert new_authorization.id == authorization.id
     end
 
+    test "does not reuse if scopes are different", %{user: user, game: game} do
+      authorization = create_authorization(user, game)
+
+      {:ok, new_authorization} = Authorizations.start_auth(user, game, %{
+        "state" => "my+state",
+        "redirect_uri" => "https://example.com/oauth/callback",
+        "scope" => "profile email"
+      })
+
+      assert new_authorization.id != authorization.id
+    end
+
     test "missing params", %{user: user, game: game} do
       {:error, changeset} = Authorizations.start_auth(user, game, %{
-        state: "my+state",
+        "state" => "my+state",
       })
 
       assert changeset.errors[:redirect_uri]
@@ -46,10 +56,7 @@ defmodule Grapevine.AuthorizationsTest do
     setup [:with_user, :with_game]
 
     test "scoped to the user", %{user: user, game: game} do
-      {:ok, authorization} = Authorizations.start_auth(user, game, %{
-        state: "my+state",
-        redirect_uri: "https://example.com/oauth/callback",
-      })
+      authorization = create_authorization(user, game)
 
       assert {:ok, _authorization} = Authorizations.get(user, authorization.id)
 
@@ -62,10 +69,7 @@ defmodule Grapevine.AuthorizationsTest do
     setup [:with_user, :with_game]
 
     test "sets authorization to active", %{user: user, game: game} do
-      {:ok, authorization} = Authorizations.start_auth(user, game, %{
-        state: "my+state",
-        redirect_uri: "https://example.com/oauth/callback",
-      })
+      authorization = create_authorization(user, game)
 
       {:ok, authorization} = Authorizations.authorize(authorization)
 
@@ -77,10 +81,7 @@ defmodule Grapevine.AuthorizationsTest do
     setup [:with_user, :with_game]
 
     test "deletes the authorization", %{user: user, game: game} do
-      {:ok, authorization} = Authorizations.start_auth(user, game, %{
-        state: "my+state",
-        redirect_uri: "https://example.com/oauth/callback",
-      })
+      authorization = create_authorization(user, game)
 
       {:ok, authorization} = Authorizations.deny(authorization)
 
@@ -116,10 +117,7 @@ defmodule Grapevine.AuthorizationsTest do
     setup [:with_user, :with_game]
 
     test "create a token", %{user: user, game: game} do
-      {:ok, authorization} = Authorizations.start_auth(user, game, %{
-        state: "my+state",
-        redirect_uri: "https://example.com/oauth/callback",
-      })
+      authorization = create_authorization(user, game)
 
       {:ok, access_token} = Authorizations.create_token(game.client_id, authorization.redirect_uri, authorization.code)
 
@@ -127,28 +125,19 @@ defmodule Grapevine.AuthorizationsTest do
     end
 
     test "invalid client id", %{user: user, game: game} do
-      {:ok, authorization} = Authorizations.start_auth(user, game, %{
-        state: "my+state",
-        redirect_uri: "https://example.com/oauth/callback",
-      })
+      authorization = create_authorization(user, game)
 
       {:error, :invalid_grant} = Authorizations.create_token("invalid", authorization.redirect_uri, authorization.code)
     end
 
     test "invalid redirect uri", %{user: user, game: game} do
-      {:ok, authorization} = Authorizations.start_auth(user, game, %{
-        state: "my+state",
-        redirect_uri: "https://example.com/oauth/callback",
-      })
+      authorization = create_authorization(user, game)
 
       {:error, :invalid_grant} = Authorizations.create_token(game.client_id, "redirect", authorization.code)
     end
 
     test "invalid code", %{user: user, game: game} do
-      {:ok, authorization} = Authorizations.start_auth(user, game, %{
-        state: "my+state",
-        redirect_uri: "https://example.com/oauth/callback",
-      })
+      authorization = create_authorization(user, game)
 
       {:error, :invalid_grant} = Authorizations.create_token(game.client_id, authorization.redirect_uri, "code")
     end
@@ -187,8 +176,9 @@ defmodule Grapevine.AuthorizationsTest do
 
   def with_token(%{user: user, game: game}) do
     {:ok, authorization} = Authorizations.start_auth(user, game, %{
-      state: "my+state",
-      redirect_uri: "https://example.com/oauth/callback",
+      "state" => "my+state",
+      "redirect_uri" => "https://example.com/oauth/callback",
+      "scope" => "profile",
     })
 
     {:ok, authorization} = Authorizations.authorize(authorization)

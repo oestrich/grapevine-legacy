@@ -1,8 +1,9 @@
 defmodule Grapevine.TestHelpers do
   @moduledoc false
 
-  alias Grapevine.Accounts
   alias Backbone.Games
+  alias Grapevine.Accounts
+  alias Grapevine.Authorizations
 
   def create_user(attributes \\ %{}) do
     attributes = Map.merge(%{
@@ -32,5 +33,16 @@ defmodule Grapevine.TestHelpers do
 
     {:ok, game} = Games.get_by_name(attributes["game"])
     game
+  end
+
+  def create_authorization(user, game) do
+    {:ok, authorization} = Authorizations.start_auth(user, game, %{
+      "state" => "my+state",
+      "redirect_uri" => "https://example.com/oauth/callback",
+      "scope" => "profile"
+    })
+    {:ok, authorization} = Authorizations.authorize(authorization)
+
+    authorization
   end
 end

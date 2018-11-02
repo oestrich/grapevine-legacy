@@ -9,6 +9,8 @@ defmodule Grapevine.Authorizations.Authorization do
   alias Grapevine.Accounts.User
   alias Grapevine.Authorizations.AccessToken
 
+  @scopes ["profile", "email"]
+
   schema "authorizations" do
     field(:redirect_uri, :string)
     field(:state, :string)
@@ -29,6 +31,7 @@ defmodule Grapevine.Authorizations.Authorization do
     |> cast(params, [:redirect_uri, :state, :scopes])
     |> validate_required([:redirect_uri, :state, :scopes])
     |> validate_redirect_uri()
+    |> validate_scopes()
     |> put_change(:game_id, game.id)
     |> put_change(:code, UUID.uuid4())
   end
@@ -37,6 +40,22 @@ defmodule Grapevine.Authorizations.Authorization do
     struct
     |> change()
     |> put_change(:active, true)
+  end
+
+  defp validate_scopes(changeset) do
+    case get_field(changeset, :scopes) do
+      [] ->
+        add_error(changeset, :scopes, "must be provided")
+
+      scopes ->
+        case Enum.all?(scopes, &Enum.member?(@scopes, &1)) do
+          true ->
+            changeset
+
+          false ->
+            add_error(changeset, :scopes, "are invalid")
+        end
+    end
   end
 
   defp validate_redirect_uri(changeset) do
@@ -60,6 +79,15 @@ defmodule Grapevine.Authorizations.Authorization do
     case uri.scheme do
       "https" ->
         changeset
+
+      "http" ->
+        case uri.host do
+          "localhost" ->
+            changeset
+
+          _ ->
+            add_error(changeset, :redirect_uri, "must be https")
+        end
 
       _ ->
         add_error(changeset, :redirect_uri, "must be https")

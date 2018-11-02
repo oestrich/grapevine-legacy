@@ -12,6 +12,7 @@ defmodule Web.Oauth.AuthorizationControllerTest do
         state: "state",
         redirect_uri: "https://example.com/oauth/callback",
         response_type: "code",
+        scope: "profile email"
       }
 
       conn = get(conn, authorization_path(conn, :new), params)
@@ -58,13 +59,5 @@ defmodule Web.Oauth.AuthorizationControllerTest do
 
   def with_game(_) do
     %{game: cache_game()}
-  end
-
-  def create_authorization(user, game) do
-    {:ok, authorization} = Authorizations.start_auth(user, game, %{
-      state: "my+state",
-      redirect_uri: "https://example.com/oauth/callback",
-    })
-    authorization
   end
 end

@@ -8,11 +8,7 @@ defmodule Web.UserControllerTest do
       user = create_user()
       game = cache_game()
 
-      {:ok, authorization} = Authorizations.start_auth(user, game, %{
-        state: "my+state",
-        redirect_uri: "https://example.com/oauth/callback",
-      })
-      {:ok, authorization} = Authorizations.authorize(authorization)
+      authorization = create_authorization(user, game)
 
       {:ok, access_token} = Authorizations.create_token(game.client_id, authorization.redirect_uri, authorization.code)
 

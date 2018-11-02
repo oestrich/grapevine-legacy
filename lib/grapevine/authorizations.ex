@@ -15,11 +15,20 @@ defmodule Grapevine.Authorizations do
   """
   def start_auth(user, game, params) do
     with {:ok, redirect_uri} <- Map.fetch(params, "redirect_uri") do
+      scopes =
+        params
+        |> Map.get("scope", "")
+        |> String.split(" ")
+        |> Enum.sort()
+
+      params = Map.put(params, "scopes", scopes)
+
       opts = [
         user_id: user.id,
         game_id: game.id,
         redirect_uri: redirect_uri,
         active: true,
+        scopes: scopes,
       ]
 
       case Repo.get_by(Authorization, opts) do

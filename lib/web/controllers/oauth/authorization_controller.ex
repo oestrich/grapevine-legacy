@@ -20,7 +20,7 @@ defmodule Web.Oauth.AuthorizationController do
           |> render("new.html")
       end
     else
-      {:error, changeset} ->
+      {:error, _} ->
         conn
         |> put_flash(:error, "Unknown issue authenticating. Please try again")
         |> redirect(to: page_path(conn, :index))
