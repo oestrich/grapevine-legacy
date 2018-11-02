@@ -10,6 +10,7 @@ defmodule Grapevine.Accounts.User do
   alias Grapevine.Characters.Character
 
   schema "users" do
+    field(:uid, Ecto.UUID, read_after_writes: true)
     field(:username, :string)
     field(:email, :string)
     field(:password, :string, virtual: true)

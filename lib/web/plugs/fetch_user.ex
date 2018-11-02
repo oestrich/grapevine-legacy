@@ -18,6 +18,7 @@ defmodule Web.Plugs.FetchUser do
           conn
           |> assign(:access_token, access_token)
           |> assign(:current_user, access_token.authorization.user)
+          |> assign(:current_scopes, access_token.authorization.scopes)
         else
           _ ->
             conn
