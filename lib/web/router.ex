@@ -1,7 +1,12 @@
 defmodule Web.Router do
   use Web, :router
-  use Plug.ErrorHandler
-  use Sentry.Plug
+
+  @report_errors Application.get_env(:gossip, :errors)[:report]
+
+  if @report_errors do
+    use Plug.ErrorHandler
+    use Sentry.Plug
+  end
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -18,10 +23,15 @@ defmodule Web.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug Web.Plugs.FetchUser, api: true
+  end
+
+  pipeline :api_authenticated do
+    plug Web.Plugs.EnsureUser, api: true
   end
 
   scope "/", Web do
-    pipe_through :browser # Use the default browser stack
+    pipe_through([:browser])
 
     get "/", PageController, :index
 
@@ -30,6 +40,12 @@ defmodule Web.Router do
     resources("/register", RegistrationController, only: [:new, :create])
 
     resources("/sign-in", SessionController, only: [:new, :create, :delete], singleton: true)
+  end
+
+  scope "/", Web do
+    pipe_through([:api, :api_authenticated])
+
+    get("/users/me", UserController, :show)
   end
 
   scope "/", Web do
@@ -44,6 +60,21 @@ defmodule Web.Router do
     resources("/chat", ChatController, only: [:index])
   end
 
+  scope "/oauth", Web.Oauth do
+    pipe_through([:browser, :logged_in])
+
+    get("/authorize", AuthorizationController, :new)
+
+    resources("/authorizations", AuthorizationController, only: [:update], singleton: true)
+  end
+
+  scope "/oauth", Web.Oauth do
+    pipe_through([:api])
+
+    post("/token", TokenController, :create)
+  end
+
+  # Catch all last route
   scope "/", Web do
     pipe_through(:browser)
 

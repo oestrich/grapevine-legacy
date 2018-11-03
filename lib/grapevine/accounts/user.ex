@@ -6,9 +6,11 @@ defmodule Grapevine.Accounts.User do
   use Grapevine.Schema
 
   alias Grapevine.Accounts
+  alias Grapevine.Authorizations.Authorization
   alias Grapevine.Characters.Character
 
   schema "users" do
+    field(:uid, Ecto.UUID, read_after_writes: true)
     field(:username, :string)
     field(:email, :string)
     field(:password, :string, virtual: true)
@@ -17,6 +19,7 @@ defmodule Grapevine.Accounts.User do
     field(:token, Ecto.UUID)
     field(:registration_key, Ecto.UUID, read_after_writes: true)
 
+    has_many(:authorizations, Authorization)
     has_many(:characters, Character)
 
     timestamps()
