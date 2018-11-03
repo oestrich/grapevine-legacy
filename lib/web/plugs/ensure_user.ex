@@ -30,9 +30,12 @@ defmodule Web.Plugs.EnsureUser do
         conn
 
       _ ->
+        uri = %URI{path: conn.request_path, query: conn.query_string}
+
         conn
         |> put_flash(:info, "You must sign in first.")
-        |> redirect(to: Routes.page_path(conn, :index))
+        |> put_session(:last_path, URI.to_string(uri))
+        |> redirect(to: Routes.session_path(conn, :new))
         |> halt()
     end
   end
