@@ -36,12 +36,18 @@ defmodule Grapevine.Authorizations do
           create_authorization(user, game, params)
 
         authorization ->
-          {:ok, authorization}
+          refresh_code(authorization)
       end
     else
       _ ->
         create_authorization(user, game, params)
     end
+  end
+
+  defp refresh_code(authorization) do
+    authorization
+    |> Authorization.refresh_code_changeset()
+    |> Repo.update()
   end
 
   defp create_authorization(user, game, params) do
@@ -151,7 +157,8 @@ defmodule Grapevine.Authorizations do
     end
   end
 
-  defp mark_as_used(authorization) do
+  @doc false
+  def mark_as_used(authorization) do
     authorization
     |> Authorization.used_changeset()
     |> Repo.update()

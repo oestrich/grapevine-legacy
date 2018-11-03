@@ -49,6 +49,12 @@ defmodule Grapevine.Authorizations.Authorization do
     |> put_change(:code, nil)
   end
 
+  def refresh_code_changeset(struct) do
+    struct
+    |> change()
+    |> put_change(:code, UUID.uuid4())
+  end
+
   defp validate_scopes(changeset) do
     case get_field(changeset, :scopes) do
       [] ->

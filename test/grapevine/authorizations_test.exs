@@ -31,6 +31,20 @@ defmodule Grapevine.AuthorizationsTest do
       assert new_authorization.id == authorization.id
     end
 
+    test "regenerates the authorization's code on reuse", %{user: user, game: game} do
+      authorization = create_authorization(user, game)
+
+      {:ok, _authorization} = Authorizations.mark_as_used(authorization)
+
+      {:ok, new_authorization} = Authorizations.start_auth(user, game, %{
+        "state" => "my+state",
+        "redirect_uri" => "https://example.com/oauth/callback",
+        "scope" => "profile"
+      })
+
+      assert new_authorization.code
+    end
+
     test "does not reuse if scopes are different", %{user: user, game: game} do
       authorization = create_authorization(user, game)
 
