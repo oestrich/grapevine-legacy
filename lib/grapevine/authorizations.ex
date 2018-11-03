@@ -3,6 +3,8 @@ defmodule Grapevine.Authorizations do
   Authorize remote logins
   """
 
+  import Ecto.Query
+
   alias Backbone.Games
   alias Grapevine.Authorizations.AccessToken
   alias Grapevine.Authorizations.Authorization
@@ -45,9 +47,22 @@ defmodule Grapevine.Authorizations do
   end
 
   defp refresh_code(authorization) do
-    authorization
-    |> Authorization.refresh_code_changeset()
-    |> Repo.update()
+    changeset = authorization |> Authorization.refresh_code_changeset()
+
+    case Repo.update(changeset) do
+      {:ok, authorization} ->
+        deactivate_all_tokens(authorization)
+        {:ok, authorization}
+
+      {:error, changeset} ->
+        {:error, changeset}
+    end
+  end
+
+  defp deactivate_all_tokens(authorization) do
+    AccessToken
+    |> where([at], at.authorization_id == ^authorization.id)
+    |> Repo.update_all(set: [active: false])
   end
 
   defp create_authorization(user, game, params) do
@@ -180,7 +195,7 @@ defmodule Grapevine.Authorizations do
 
       true ->
         valid_til = access_token.inserted_at |> Timex.shift(seconds: access_token.expires_in)
-        Timex.before?(Timex.now(), valid_til)
+        access_token.active && Timex.before?(Timex.now(), valid_til)
     end
   end
 end

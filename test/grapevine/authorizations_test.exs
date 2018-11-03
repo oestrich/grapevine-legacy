@@ -2,6 +2,7 @@ defmodule Grapevine.AuthorizationsTest do
   use Grapevine.DataCase
 
   alias Grapevine.Authorizations
+  alias Grapevine.Authorizations.AccessToken
   alias Grapevine.Authorizations.Authorization
 
   describe "starting to authenticate" do
@@ -43,6 +44,21 @@ defmodule Grapevine.AuthorizationsTest do
       })
 
       assert new_authorization.code
+    end
+
+    test "deactivates all previous tokens on reuse", %{user: user, game: game} do
+      authorization = create_authorization(user, game)
+
+      {:ok, access_token} = Authorizations.create_token(game.client_id, authorization.redirect_uri, authorization.code)
+
+      {:ok, _new_authorization} = Authorizations.start_auth(user, game, %{
+        "state" => "my+state",
+        "redirect_uri" => "https://example.com/oauth/callback",
+        "scope" => "profile"
+      })
+
+      access_token = Repo.get(AccessToken, access_token.id)
+      refute access_token.active
     end
 
     test "does not reuse if scopes are different", %{user: user, game: game} do
@@ -189,6 +205,11 @@ defmodule Grapevine.AuthorizationsTest do
 
     test "is valid", %{access_token: access_token} do
       assert Authorizations.valid_token?(access_token)
+    end
+
+    test "token is not active", %{access_token: access_token} do
+      access_token = %{access_token | active: false}
+      refute Authorizations.valid_token?(access_token)
     end
 
     test "after expiration", %{access_token: access_token} do
