@@ -27,6 +27,9 @@ defmodule Grapevine.TestHelpers do
       "allow_character_registration" => true,
       "client_id" => UUID.uuid4(),
       "client_secret" => UUID.uuid4(),
+      "redirect_uris" => [
+        "https://example.com/oauth/callback"
+      ]
     }, attributes)
 
     Games.cache_remote([attributes])

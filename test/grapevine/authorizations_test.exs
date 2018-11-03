@@ -43,6 +43,16 @@ defmodule Grapevine.AuthorizationsTest do
       assert new_authorization.id != authorization.id
     end
 
+    test "invalid if redirect uri does not match a known uri", %{user: user, game: game} do
+      {:error, changeset} = Authorizations.start_auth(user, game, %{
+        "state" => "my+state",
+        "redirect_uri" => "https://example.com/oauth/callbacks",
+        "scope" => "profile"
+      })
+
+      assert changeset.errors[:redirect_uri]
+    end
+
     test "missing params", %{user: user, game: game} do
       {:error, changeset} = Authorizations.start_auth(user, game, %{
         "state" => "my+state",
@@ -188,7 +198,11 @@ defmodule Grapevine.AuthorizationsTest do
   end
 
   def with_game(_) do
-    %{game: cache_game()}
+    game = cache_game(%{
+      "redirect_uris" => ["https://example.com/oauth/callback"]
+    })
+
+    %{game: game}
   end
 
   def with_token(%{user: user, game: game}) do

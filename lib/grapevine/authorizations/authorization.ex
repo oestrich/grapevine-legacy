@@ -31,6 +31,7 @@ defmodule Grapevine.Authorizations.Authorization do
     |> cast(params, [:redirect_uri, :state, :scopes])
     |> validate_required([:redirect_uri, :state, :scopes])
     |> validate_redirect_uri()
+    |> validate_redirect_uri_known(game)
     |> validate_scopes()
     |> put_change(:game_id, game.id)
     |> put_change(:code, UUID.uuid4())
@@ -137,6 +138,22 @@ defmodule Grapevine.Authorizations.Authorization do
 
       _ ->
         add_error(changeset, :redirect_uri, "must be a fully qualified URI")
+    end
+  end
+
+  defp validate_redirect_uri_known(changeset, game) do
+    case get_field(changeset, :redirect_uri) do
+      nil ->
+        changeset
+
+      redirect_uri ->
+        case redirect_uri in game.redirect_uris do
+          true ->
+            changeset
+
+          false ->
+            add_error(changeset, :redirect_uri, "does not match a know URI")
+        end
     end
   end
 end
