@@ -14,7 +14,9 @@ defmodule Web.Oauth.TokenController do
       |> render("token.json")
     else
       _ ->
-        render(conn, ErrorView, "500.json")
+        conn
+        |> put_status(400)
+        |> render("error.json")
     end
   end
 end
