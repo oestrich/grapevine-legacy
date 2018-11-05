@@ -20,7 +20,7 @@ defmodule Grapevine.Accounts.User do
     field(:registration_key, Ecto.UUID, read_after_writes: true)
 
     field(:password_reset_token, Ecto.UUID)
-    field(:password_reset_expires_at, :utc_datetime)
+    field(:password_reset_expires_at, :utc_datetime_usec)
 
     has_many(:authorizations, Authorization)
     has_many(:characters, Character)

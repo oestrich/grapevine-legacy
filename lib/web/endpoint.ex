@@ -1,7 +1,7 @@
 defmodule Web.Endpoint do
   use Phoenix.Endpoint, otp_app: :grapevine
 
-  socket "/socket", Web.UserSocket
+  socket "/socket", Web.UserSocket, websocket: true
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -24,7 +24,7 @@ defmodule Web.Endpoint do
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],
-    json_decoder: Poison
+    json_decoder: Jason
 
   plug Plug.MethodOverride
   plug Plug.Head

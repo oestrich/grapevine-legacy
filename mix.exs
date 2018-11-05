@@ -38,21 +38,24 @@ defmodule Grapevine.Mixfile do
       {:bamboo_smtp, "~> 1.5"},
       {:bcrypt_elixir, "~> 1.0"},
       {:comeonin, "~> 4.0"},
-      {:cowboy, "~> 1.0"},
+      {:cowboy, "~> 2.0"},
       {:credo, "~> 0.10", only: [:dev, :test], runtime: false},
       {:distillery, "~> 2.0", runtime: false},
+      {:ecto, "~> 3.0"},
+      {:ecto_sql, "~> 3.0"},
       {:elixir_uuid, "~> 1.1"},
       {:gettext, "~> 0.11"},
       {:gossip, "~> 1.0"},
-      {:phoenix, "~> 1.3.4"},
-      {:phoenix_ecto, "~> 3.2"},
+      {:phoenix, "~> 1.4.0-rc.3", override: true},
+      {:phoenix_ecto, "~> 4.0"},
       {:phoenix_html, "~> 2.10"},
-      {:phoenix_live_reload, "~> 1.0", only: :dev},
+      {:phoenix_live_reload, "~> 1.2-rc.0", only: :dev},
       {:phoenix_pubsub, "~> 1.0"},
+      {:plug_cowboy, "~> 2.0", override: true},
       {:postgrex, ">= 0.0.0"},
       {:prometheus_ex, "~> 3.0"},
       {:prometheus_plugs, "~> 1.1.1"},
-      {:sentry, "~> 6.4"}
+      {:sentry, "~> 7.0"}
     ]
   end
 

@@ -1,5 +1,7 @@
 defmodule Grapevine.Repo do
-  use Ecto.Repo, otp_app: :grapevine
+  use Ecto.Repo,
+    otp_app: :grapevine,
+    adapter: Ecto.Adapters.Postgres
 
   @doc """
   Dynamically loads the repository url from the

@@ -15,7 +15,7 @@ defmodule Grapevine.Application do
     ]
 
     if @report_errors do
-      :ok = :error_logger.add_report_handler(Sentry.Logger)
+      {:ok, _} = Logger.add_backend(Sentry.LoggerBackend)
     end
 
     Metrics.Setup.setup()

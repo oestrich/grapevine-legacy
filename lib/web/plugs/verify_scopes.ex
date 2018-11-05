@@ -20,7 +20,8 @@ defmodule Web.Plugs.VerifyScopes do
       false ->
         conn
         |> put_status(401)
-        |> render(ErrorView, "401.json")
+        |> put_view(ErrorView)
+        |> render("401.json")
         |> halt()
     end
   end

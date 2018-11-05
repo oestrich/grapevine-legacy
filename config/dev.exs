@@ -50,7 +50,6 @@ config :phoenix, :stacktrace_depth, 20
 
 # Configure your database
 database = [
-  adapter: Ecto.Adapters.Postgres,
   database: "grapevine_dev",
   hostname: "localhost",
   pool_size: 10

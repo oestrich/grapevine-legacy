@@ -6,7 +6,8 @@ defmodule Grapevine.ReleaseTasks do
     :crypto,
     :ssl,
     :postgrex,
-    :ecto
+    :ecto,
+    :ecto_sql
   ]
 
   @apps %{
@@ -39,7 +40,7 @@ defmodule Grapevine.ReleaseTasks do
 
     # Start the Repo(s) for grapevine
     IO.puts("Starting repos..")
-    Enum.each(repos, & &1.start_link(pool_size: 1))
+    Enum.each(repos, & &1.start_link(pool_size: 2))
   end
 
   def priv_dir(app), do: "#{:code.priv_dir(app)}"
