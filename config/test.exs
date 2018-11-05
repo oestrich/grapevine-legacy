@@ -6,8 +6,7 @@ config :grapevine, Web.Endpoint,
   http: [port: 4005],
   server: false
 
-# Print only warnings and errors during test
-config :logger, level: :warn
+config :logger, level: :error
 
 # Configure your database
 database = [
@@ -24,3 +23,5 @@ config :bcrypt_elixir, :log_rounds, 4
 config :grapevine, :gossip, module: Test.Gossip
 
 config :backbone, :repo, Grapevine.Repo
+
+config :grapevine, Grapevine.Mailer, adapter: Bamboo.TestAdapter

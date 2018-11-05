@@ -34,6 +34,8 @@ defmodule Grapevine.Mixfile do
   defp deps do
     [
       {:backbone, git: "https://github.com/oestrich/gossip-backbone.git"},
+      {:bamboo, "~> 1.0"},
+      {:bamboo_smtp, "~> 1.5"},
       {:bcrypt_elixir, "~> 1.0"},
       {:comeonin, "~> 4.0"},
       {:cowboy, "~> 1.0"},

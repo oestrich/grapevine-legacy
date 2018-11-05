@@ -63,6 +63,8 @@ config :gossip, :url, "ws://localhost:4001/socket"
 config :gossip, :client_id, "e16a2503-6153-48a9-9e92-3d087b9cc6d7"
 config :gossip, :client_secret, "3de1854f-6f3a-49f4-a7f2-bc01a18c8369"
 
+config :grapevine, Grapevine.Mailer, adapter: Bamboo.LocalAdapter
+
 if File.exists?("config/dev.local.exs") do
   import_config("dev.local.exs")
 end

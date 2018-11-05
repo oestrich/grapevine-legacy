@@ -39,6 +39,12 @@ defmodule Web.Router do
 
     resources("/register", RegistrationController, only: [:new, :create])
 
+    get("/register/reset", RegistrationResetController, :new)
+    post("/register/reset", RegistrationResetController, :create)
+
+    get("/register/reset/verify", RegistrationResetController, :edit)
+    post("/register/reset/verify", RegistrationResetController, :update)
+
     resources("/sign-in", SessionController, only: [:new, :create, :delete], singleton: true)
   end
 
@@ -79,5 +85,9 @@ defmodule Web.Router do
     pipe_through(:browser)
 
     resources("/", ProfileController, only: [:show])
+  end
+
+  if Mix.env() == :dev do
+    forward("/emails/sent", Bamboo.SentEmailViewerPlug)
   end
 end

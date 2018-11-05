@@ -19,6 +19,9 @@ defmodule Grapevine.Accounts.User do
     field(:token, Ecto.UUID)
     field(:registration_key, Ecto.UUID, read_after_writes: true)
 
+    field(:password_reset_token, Ecto.UUID)
+    field(:password_reset_expires_at, :utc_datetime)
+
     has_many(:authorizations, Authorization)
     has_many(:characters, Character)
 
@@ -41,6 +44,24 @@ defmodule Grapevine.Accounts.User do
     |> validate_confirmation(:password)
     |> unique_constraint(:username, name: :users_lower_username_index)
     |> unique_constraint(:email, name: :users_lower_email_index)
+  end
+
+  def password_changeset(struct, params) do
+    struct
+    |> cast(params, [:password, :password_confirmation])
+    |> validate_required([:password])
+    |> validate_confirmation(:password)
+    |> put_change(:password_reset_token, nil)
+    |> put_change(:password_reset_expires_at, nil)
+    |> hash_password
+    |> validate_required([:password_hash])
+  end
+
+  def password_reset_changeset(struct) do
+    struct
+    |> change()
+    |> put_change(:password_reset_token, UUID.uuid4())
+    |> put_change(:password_reset_expires_at, Timex.now() |> Timex.shift(hours: 1))
   end
 
   def regen_key_changeset(struct) do
