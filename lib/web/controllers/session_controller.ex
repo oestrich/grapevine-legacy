@@ -32,7 +32,12 @@ defmodule Web.SessionController do
     |> redirect(to: page_path(conn, :index))
   end
 
-  defp after_sign_in_redirect(conn) do
+  @doc """
+  Redirect to the last seen page after being asked to sign in
+
+  Or the home page
+  """
+  def after_sign_in_redirect(conn) do
     case get_session(conn, :last_path) do
       nil ->
         conn |> redirect(to: page_path(conn, :index))
