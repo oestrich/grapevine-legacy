@@ -18,6 +18,8 @@ defmodule Grapevine.Application do
       :ok = :error_logger.add_report_handler(Sentry.Logger)
     end
 
+    Metrics.Setup.setup()
+
     opts = [strategy: :one_for_one, name: Grapevine.Supervisor]
     Supervisor.start_link(children, opts)
   end
