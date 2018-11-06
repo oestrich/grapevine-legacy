@@ -8,6 +8,7 @@ defmodule Web.GameController do
   def index(conn, _params) do
     conn
     |> assign(:games, Games.all())
+    |> assign(:title, "Games on Grapevine")
     |> assign(:open_graph_title, "Games on Grapevine")
     |> assign(:open_graph_description, "View a listing of games that are on the Grapevine and Gossip network.")
     |> assign(:open_graph_url, game_url(conn, :index))
@@ -18,6 +19,7 @@ defmodule Web.GameController do
     with {:ok, game} <- Games.get_by_name(short_name, display: true) do
       conn
       |> assign(:game, game)
+      |> assign(:title, "#{game.name} - Grapevine")
       |> assign(:open_graph_title, game.name)
       |> assign(:open_graph_description, game.description)
       |> assign(:open_graph_url, game_url(conn, :show, game.id))

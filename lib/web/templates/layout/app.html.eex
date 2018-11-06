@@ -19,7 +19,14 @@
       <meta property="og:url" content="<%= @open_graph_url %>" />
     <% end %>
 
-    <title>Grapevine</title>
+    <meta property="og:site_name" content="Grapevine" />
+
+    <%= if Map.has_key?(assigns, :title) do %>
+      <title><%= @title %></title>
+    <% else %>
+      <title>Grapevine</title>
+    <% end %>
+
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
   </head>
