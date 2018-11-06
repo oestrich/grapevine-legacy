@@ -18,6 +18,9 @@ defmodule Web.GameController do
     with {:ok, game} <- Games.get_by_name(short_name, display: true) do
       conn
       |> assign(:game, game)
+      |> assign(:open_graph_title, game.name)
+      |> assign(:open_graph_description, game.description)
+      |> assign(:open_graph_url, game_url(conn, :show, game.id))
       |> render("show.html")
     end
   end
