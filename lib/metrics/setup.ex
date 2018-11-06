@@ -4,6 +4,8 @@ defmodule Metrics.Setup do
   """
 
   def setup() do
+    Metrics.OAuthInstrumenter.setup()
+
     Metrics.PlugExporter.setup()
   end
 end
