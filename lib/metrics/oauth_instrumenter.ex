@@ -30,13 +30,19 @@ defmodule Metrics.OAuthInstrumenter do
     )
 
     Counter.declare(
-      name: :grapevine_oauth_token_created_count,
+      name: :grapevine_oauth_create_token_count,
       help: "Total number of access tokens successfully created"
     )
 
-    Enum.each([:start, :authorized, :denied, :invalid_grant, :create_token], fn kind ->
-      Telemetry.attach("oauth-prometheus-#{kind}", [:web, :oauth, kind], __MODULE__, :handle_event, nil)
-    end)
+    events = [
+      [:web, :oauth, :start],
+      [:web, :oauth, :authorized],
+      [:web, :oauth, :denied],
+      [:web, :oauth, :invalid_grant],
+      [:web, :oauth, :create_token],
+    ]
+
+    Telemetry.attach_many("oauth-prometheus", events, __MODULE__, :handle_event, nil)
   end
 
   def handle_event([:web, :oauth, :start], _value, %{user_id: user_id, game_id: game_id}, _config) do
@@ -64,6 +70,6 @@ defmodule Metrics.OAuthInstrumenter do
   end
 
   def handle_event([:web, :oauth, :create_token], _value, _metadata, _config) do
-    Counter.inc(name: :grapevine_oauth_token_created_count)
+    Counter.inc(name: :grapevine_oauth_create_token_count)
   end
 end
