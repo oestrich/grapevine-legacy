@@ -36,7 +36,7 @@ defmodule Grapevine.Accounts do
   @doc """
   Register a new user
   """
-  @spec register(user_params()) :: {:ok, User.t()}
+  @spec register(user_params()) :: {:ok, User.t()} | {:error, Ecto.Changeset.t()}
   def register(params) do
     %User{}
     |> User.changeset(params)
@@ -168,7 +168,7 @@ defmodule Grapevine.Accounts do
   @doc """
   Reset a password
   """
-  @spec reset_password(String.t(), map()) :: {:ok, User.t()}
+  @spec reset_password(String.t(), map()) :: {:ok, User.t()} | :error
   def reset_password(token, params) do
     with {:ok, uuid} <- Ecto.UUID.cast(token),
          {:ok, user} <- find_user_by_reset_token(uuid),
