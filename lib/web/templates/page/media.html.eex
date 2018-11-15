@@ -1,0 +1,12 @@
+<h2>Grapevine Media</h2>
+
+<h4>Logo</h4>
+<%= img_tag("/images/grapevine.png") %>
+
+<pre class="mt-3"><%= static_url(@conn, "/images/grapevine.png") %></pre>
+
+<h4 class="mt-3">Icon</h4>
+
+<%= img_tag("/images/grapevine-icon.png") %>
+
+<pre class="mt-3"><%= static_url(@conn, "/images/grapevine-icon.png") %></pre>

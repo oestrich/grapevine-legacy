@@ -37,6 +37,8 @@ defmodule Web.Router do
 
     resources("/games", GameController, only: [:index, :show])
 
+    get("/media", PageController, :media)
+
     resources("/register", RegistrationController, only: [:new, :create])
 
     get("/register/reset", RegistrationResetController, :new)
