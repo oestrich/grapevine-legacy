@@ -64,6 +64,8 @@ config :gossip, :client_secret, "3de1854f-6f3a-49f4-a7f2-bc01a18c8369"
 
 config :grapevine, Grapevine.Mailer, adapter: Bamboo.LocalAdapter
 
+config :grapevine, :gossip, base_url: "http://localhost:4001/"
+
 if File.exists?("config/dev.local.exs") do
   import_config("dev.local.exs")
 end

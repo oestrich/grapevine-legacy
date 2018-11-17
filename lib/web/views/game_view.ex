@@ -31,4 +31,8 @@ defmodule Web.GameView do
         "#{connection.host}:#{connection.port}"
     end
   end
+
+  def game_statistic_path(short_name) do
+    Grapevine.gossip_base_url() <> "/games/#{short_name}/stats/players"
+  end
 end
