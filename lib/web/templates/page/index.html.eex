@@ -6,6 +6,15 @@
     <%= if !Map.has_key?(assigns, :current_user) do %>
       <%= link("Register Now", to: registration_path(@conn, :new), class: "btn btn-outline-secondary") %>
     <% end %>
+
+    <%= if @highlighted_game do %>
+      <div class="card mt-3">
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted">Highlighted Game</h6>
+          <%= @highlighted_game.name %> - <%= link("Play Now", to: @highlighted_game.homepage_url, target: "_blank") %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>
 

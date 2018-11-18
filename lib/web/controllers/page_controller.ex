@@ -1,8 +1,12 @@
 defmodule Web.PageController do
   use Web, :controller
 
+  alias Web.Game
+
   def index(conn, _params) do
-    render(conn, "index.html")
+    conn
+    |> assign(:highlighted_game, Game.highlighted_game())
+    |> render("index.html")
   end
 
   def media(conn, _params) do
