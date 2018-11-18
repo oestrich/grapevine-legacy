@@ -7,6 +7,7 @@ defmodule Grapevine.GossipCallback do
 
   require Logger
 
+  alias Backbone.Games
   alias Grapevine.Tells
 
   @behaviour Gossip.Client.Core
@@ -37,7 +38,11 @@ defmodule Grapevine.GossipCallback do
   def player_sign_out(_game_name, _player_name), do: :ok
 
   @impl true
-  def player_update(_game_name, _player_names), do: :ok
+  def player_update(game_name, _player_names) do
+    with {:ok, game} <- Games.get_by_name(game_name) do
+      Games.touch_online(game)
+    end
+  end
 
   @impl true
   def tell_receive(from_game, from_player, to_player, message) do
@@ -48,7 +53,11 @@ defmodule Grapevine.GossipCallback do
   def game_update(_game), do: :ok
 
   @impl true
-  def game_connect(_game), do: :ok
+  def game_connect(game_name) do
+    with {:ok, game} <- Games.get_by_name(game_name) do
+      Games.touch_online(game)
+    end
+  end
 
   @impl true
   def game_disconnect(_game), do: :ok

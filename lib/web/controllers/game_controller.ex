@@ -7,7 +7,7 @@ defmodule Web.GameController do
 
   def index(conn, _params) do
     conn
-    |> assign(:games, Games.all())
+    |> assign(:games, Games.all(sort: :online))
     |> assign(:title, "Games on Grapevine")
     |> assign(:open_graph_title, "Games on Grapevine")
     |> assign(:open_graph_description, "View a listing of games that are on the Grapevine and Gossip network.")

@@ -10,7 +10,9 @@ defmodule Web.GameView do
   end
 
   def online_status(game) do
-    case Games.game_online?(game) do
+    active_cutoff = Timex.now() |> Timex.shift(minutes: -1)
+
+    case !!game.last_seen_at && Timex.before?(active_cutoff, game.last_seen_at) do
       true ->
         content_tag(:i, "", class: "fa fa-circle online", alt: "Game Online", title: "Online")
 
