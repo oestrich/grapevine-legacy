@@ -9,7 +9,7 @@ defmodule Web.Game do
   Chose a random game that is online and has a home page
   """
   def highlighted_game() do
-    Games.all(online_only: true)
+    Games.all(only_online: true)
     |> Enum.filter(&(&1.homepage_url != nil))
     |> Enum.shuffle()
     |> List.first()
