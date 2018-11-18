@@ -1,8 +1,9 @@
 <div class="position-relative overflow-hidden p-3 p-md-4 m-md-3 text-center bg-light">
-  <div class="col-md-6 p-lg-5 mx-auto my-5">
+  <div class="col-md-6 p-lg-3 mx-auto my-3">
     <h1 class="display-4 font-weight-normal">Grapevine</h1>
     <p class="lead font-weight-normal">Welcome to Grapevine, player portal for the Gossip MUD chat network.</p>
     <%= if !Map.has_key?(assigns, :current_user) do %>
+      <p>Create your profile today to get single sign on for support games, chat with your friends no matter what game they're playing, and claim characters on games you play.</p>
       <%= link("Register Now", to: registration_path(@conn, :new), class: "btn btn-outline-secondary") %>
     <% end %>
   </div>
@@ -12,13 +13,19 @@
   <div class="bg-dark mr-md-3 pt-1 px-1 pt-md-3 px-md-3 text-center text-white">
     <div class="my-3 py-1">
       <h2 class="display-5">Games</h2>
-      <p class="lead">View information about games on the network.</p>
+      <p class="lead">Read up on games connected to the network.</p>
+      <%= link("View Games", to: game_path(@conn, :index), class: "btn btn-secondary") %>
     </div>
   </div>
   <div class="bg-dark mr-md-3 pt-1 px-1 pt-md-3 px-md-3 text-center text-white">
     <div class="my-3 py-1">
       <h2 class="display-5">Profile</h2>
       <p class="lead">Claim your game characters for your Grapevine profile.</p>
+      <%= if Map.has_key?(assigns, :current_user) do %>
+        <%= link("View Your Profile", to: profile_path(@conn, :show, @current_user.username), class: "btn btn-secondary") %>
+      <% else %>
+        <%= link("Register Now", to: registration_path(@conn, :new), class: "btn btn-secondary") %>
+      <% end %>
     </div>
   </div>
 </div>
