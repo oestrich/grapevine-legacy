@@ -2,7 +2,7 @@
   <div class="col-md-6 p-lg-3 mx-auto my-3">
     <h1 class="display-4 font-weight-normal">Grapevine</h1>
     <p class="lead font-weight-normal">Welcome to Grapevine, player portal for the Gossip MUD chat network.</p>
-    <p>Create your profile today to get single sign on for support games, chat with your friends no matter what game they're playing, and claim characters on games you play.</p>
+    <p>Create your profile today to get single sign on for supported games, chat with your friends no matter what game they're playing, and claim characters on games you play.</p>
     <%= if !Map.has_key?(assigns, :current_user) do %>
       <%= link("Register Now", to: registration_path(@conn, :new), class: "btn btn-outline-secondary") %>
     <% end %>
