@@ -6,7 +6,7 @@ defmodule Grapevine.Games do
   @doc """
   Helper for all games
   """
-  def all(), do: Backbone.Games.all()
+  def all(opts \\ []), do: Backbone.Games.all(opts)
 
   @doc """
   Check if a game is online or not
