@@ -140,6 +140,20 @@ pre {
   }
 }
 
+.bg-dark {
+  background-color: #000 !important;
+}
+
+.btn-outline-primary {
+  color: #aa74da;
+  border-color: #aa74da;
+}
+
+.btn-outline-primary:hover {
+  background-color: #aa74da;
+  border-color: #aa74da;
+}
+
 /* Charts */
 .chart {
   background-color: #000000;

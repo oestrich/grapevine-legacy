@@ -1,19 +1,9 @@
-<div class="position-relative overflow-hidden p-3 p-md-4 m-md-3 text-center bg-light">
-  <div class="col-md-6 p-lg-3 mx-auto my-3">
+<div class="position-relative overflow-hidden p-2 p-md-3 m-md-3 text-center bg-light">
+  <div class="col-md-8 mx-auto my-2">
     <h1 class="display-4 font-weight-normal">Grapevine</h1>
     <p class="lead font-weight-normal">Welcome to Grapevine, player portal for the Gossip MUD chat network.</p>
-    <p>Create your profile today to get single sign on for supported games, chat with your friends no matter what game they're playing, and claim characters on games you play.</p>
     <%= if !Map.has_key?(assigns, :current_user) do %>
-      <%= link("Register Now", to: registration_path(@conn, :new), class: "btn btn-outline-secondary") %>
-    <% end %>
-
-    <%= if @highlighted_game do %>
-      <div class="card mt-3">
-        <div class="card-body">
-          <h6 class="card-subtitle mb-2 text-muted">Highlighted Game</h6>
-          <%= @highlighted_game.name %> - <%= link("Play Now", to: @highlighted_game.homepage_url, target: "_blank") %>
-        </div>
-      </div>
+      <%= link("Register Now", to: registration_path(@conn, :new), class: "btn btn-outline-primary") %>
     <% end %>
   </div>
 </div>
@@ -52,5 +42,18 @@
       <h2 class="display-5">Single Sign On</h2>
       <p class="lead">Use your Grapevine account to sign on to supported games.</p>
     </div>
+  </div>
+</div>
+
+<div class="position-relative overflow-hidden p-2 p-md-3 m-md-3 text-center">
+  <div class="col-md-6 mx-auto my-2">
+    <%= if @highlighted_game do %>
+      <div class="card mt-3">
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted">Highlighted Game</h6>
+          <%= @highlighted_game.name %> - <%= link("Play Now", to: @highlighted_game.homepage_url, target: "_blank") %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>
