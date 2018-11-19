@@ -19,15 +19,15 @@
 </div>
 
 <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
-  <div class="bg-dark mr-md-3 pt-1 px-1 pt-md-3 px-md-3 text-center text-white">
-    <div class="my-3 py-1">
+  <div class="bg-dark mr-md-3 pt-1 px-1 pt-md-3 px-md-3 text-center text-white pb-sm-3">
+    <div class="my-3 mb-md-0 pb-3">
       <h2 class="display-5">Games</h2>
       <p class="lead">Read up on games connected to the network.</p>
       <%= link("View Games", to: game_path(@conn, :index), class: "btn btn-secondary") %>
     </div>
   </div>
-  <div class="bg-dark mr-md-3 pt-1 px-1 pt-md-3 px-md-3 text-center text-white">
-    <div class="my-3 py-1">
+  <div class="bg-dark mr-md-3 pt-1 px-1 pt-md-3 px-md-3 text-center text-white pb-sm-3">
+    <div class="my-3 mb-md-0 pb-3">
       <h2 class="display-5">Profile</h2>
       <p class="lead">Claim your game characters for your Grapevine profile.</p>
       <%= if Map.has_key?(assigns, :current_user) do %>
@@ -35,6 +35,22 @@
       <% else %>
         <%= link("Register Now", to: registration_path(@conn, :new), class: "btn btn-secondary") %>
       <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+  <div class="bg-dark mr-md-3 pt-1 px-1 pt-md-3 px-md-3 text-center text-white pb-sm-3">
+    <div class="my-3 mb-md-0 pb-3">
+      <h2 class="display-5">Achievements</h2>
+      <p><i>Coming Soon</i></p>
+      <p class="lead">Unlock achievements on games you play.</p>
+    </div>
+  </div>
+  <div class="bg-dark mr-md-3 pt-1 px-1 pt-md-3 px-md-3 text-center text-white pb-sm-3">
+    <div class="my-3 mb-md-0 pb-3">
+      <h2 class="display-5">Single Sign On</h2>
+      <p class="lead">Use your Grapevine account to sign on to supported games.</p>
     </div>
   </div>
 </div>
