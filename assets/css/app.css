@@ -144,6 +144,16 @@ pre {
   background-color: #000 !important;
 }
 
+.btn-primary {
+  background-color: #aa74da;
+  border-color: #aa74da;
+}
+
+.btn-primary:hover {
+  background-color: #885CAE;
+  border-color: #885CAE;
+}
+
 .btn-outline-primary {
   color: #aa74da;
   border-color: #aa74da;
