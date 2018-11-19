@@ -151,9 +151,21 @@ pre {
   background-color: $purple;
   border-color: $purple;
 
+  &:not(:disabled):not(.disabled):active:focus,
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(187, 143, 225, .5);
+  }
+
+  &:not(:disabled):not(.disabled).active,
+  &:not(:disabled):not(.disabled):active {
+    background-color: $dark-purple;
+    border-color: $dark-purple;
+  }
+
+  &:active,
   &:hover {
-    background-color: #885CAE;
-    border-color: #885CAE;
+    background-color: $dark-purple;
+    border-color: $dark-purple;
   }
 }
 
