@@ -1,3 +1,6 @@
+$purple: #aa74da;
+$dark-purple: #885CAE;
+
 main {
   padding-top: 1em;
 }
@@ -145,23 +148,23 @@ pre {
 }
 
 .btn-primary {
-  background-color: #aa74da;
-  border-color: #aa74da;
-}
+  background-color: $purple;
+  border-color: $purple;
 
-.btn-primary:hover {
-  background-color: #885CAE;
-  border-color: #885CAE;
+  &:hover {
+    background-color: #885CAE;
+    border-color: #885CAE;
+  }
 }
 
 .btn-outline-primary {
-  color: #aa74da;
-  border-color: #aa74da;
-}
+  color: $purple;
+  border-color: $purple;
 
-.btn-outline-primary:hover {
-  background-color: #aa74da;
-  border-color: #aa74da;
+  &:hover {
+    background-color: $purple;
+    border-color: $purple;
+  }
 }
 
 /* Charts */
