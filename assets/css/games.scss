@@ -1,3 +1,5 @@
+@import "colors";
+
 .game {
   .online {
     color: #28a745;
@@ -5,5 +7,17 @@
 
   .offline {
     color: #dc3545;
+  }
+
+  .home-page {
+    font-size: 1rem;
+  }
+
+  .player {
+    display: inline-block;
+    margin: 5px;
+    padding: 5px;
+    border: 2px solid $purple;
+    border-radius: 4px;
   }
 }
