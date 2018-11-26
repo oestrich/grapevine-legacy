@@ -8,6 +8,7 @@ defmodule Grapevine.GossipCallback do
   require Logger
 
   alias Backbone.Games
+  alias Backbone.Sync
   alias Grapevine.Tells
 
   @behaviour Gossip.Client.Core
@@ -23,6 +24,11 @@ defmodule Grapevine.GossipCallback do
 
   @impl true
   def players(), do: ["system"]
+
+  @impl true
+  def authenticated() do
+    Sync.trigger_sync()
+  end
 
   @impl true
   def message_broadcast(message) do
@@ -73,6 +79,14 @@ defmodule Grapevine.GossipCallback do
 
     def process(state, event = %{"event" => "sync/channels"}) do
       Sync.sync_channels(state, event)
+
+      {:ok, state}
+    end
+
+    def process(state, event = %{"event" => "sync/events"}) do
+      Sync.sync_events(event)
+
+      {:ok, state}
     end
 
     def process(state, event = %{"event" => "sync/games"}) do
