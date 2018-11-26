@@ -1,6 +1,7 @@
 defmodule Web.GameController do
   use Web, :controller
 
+  alias Backbone.Events
   alias Backbone.Games
 
   action_fallback(Web.FallbackController)
@@ -19,6 +20,7 @@ defmodule Web.GameController do
     with {:ok, game} <- Games.get_by_name(short_name, display: true) do
       conn
       |> assign(:game, game)
+      |> assign(:events, Events.recent(game))
       |> assign(:title, "#{game.name} - Grapevine")
       |> assign(:open_graph_title, game.name)
       |> assign(:open_graph_description, game.description)

@@ -78,4 +78,27 @@
       </div>
     </div>
   </div>
+
+  <%= unless Enum.empty?(@events) do %>
+    <div class="row mt-3">
+      <div class="col-md-12">
+        <h3>In Game Events</h3>
+        <div class="row">
+          <%= Enum.map(@events, fn event -> %>
+            <div class="col-md-3">
+              <div class="card mt-3">
+                <div class="card-body">
+                  <h5 class="card-title"><%= event.title %></h5>
+                  <h6 class="card-subtitle mb-2 text-muted"><%= event.start_date %> to <%= event.end_date %></h6>
+                  <%= if event.description do %>
+                    <p class="card-text"><%= text_to_html(event.description) %></p>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end) %>
+        </div>
+      </div>
+    </div>
+  <% end %>
 </div>
