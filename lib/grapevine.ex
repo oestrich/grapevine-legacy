@@ -3,8 +3,6 @@ defmodule Grapevine do
   Grapevine main module
   """
 
-  @gossip_base_url Application.get_env(:grapevine, :gossip)[:base_url]
-
   @doc """
   Get the running version of Grapevine
   """
@@ -19,5 +17,5 @@ defmodule Grapevine do
   @doc """
   Get the base HTTP URL for Gossip
   """
-  def gossip_base_url(), do: @gossip_base_url
+  def gossip_base_url(), do: Application.get_env(:grapevine, :gossip)[:base_url]
 end

@@ -85,8 +85,6 @@ defmodule Grapevine.GossipCallback do
 
     def process(state, event = %{"event" => "sync/channels"}) do
       Sync.sync_channels(state, event)
-
-      {:ok, state}
     end
 
     def process(state, event = %{"event" => "sync/events"}) do
