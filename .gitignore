@@ -30,3 +30,6 @@ npm-debug.log
 /env.sh
 /scp.sh
 /backups
+
+.vagrant
+deploy/hosts_*
