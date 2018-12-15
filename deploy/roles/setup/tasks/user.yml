@@ -6,12 +6,30 @@
     password: "*"
   become: true
 
-- name: Allow 'deploy' to have passwordless sudo
+- name: Allow 'deploy' to have passwordless sudo star
   lineinfile:
     dest: /etc/sudoers
     state: present
-    regexp: '^deploy'
-    line: 'deploy ALL=(ALL) NOPASSWD: ALL'
+    regexp: ' start grapevine'
+    line: 'deploy ALL=(ALL) NOPASSWD: /bin/systemctl start grapevine'
+    validate: 'visudo -cf %s'
+  become: true
+
+- name: Allow 'deploy' to have passwordless sudo stop
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: ' stop grapevine'
+    line: 'deploy ALL=(ALL) NOPASSWD: /bin/systemctl stop grapevine'
+    validate: 'visudo -cf %s'
+  become: true
+
+- name: Allow 'deploy' to have passwordless sudo restart
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: ' restart grapevine'
+    line: 'deploy ALL=(ALL) NOPASSWD: /bin/systemctl restart grapevine'
     validate: 'visudo -cf %s'
   become: true
 
