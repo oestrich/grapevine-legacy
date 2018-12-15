@@ -75,7 +75,13 @@ defmodule Grapevine.GossipCallback do
 
     @behaviour Gossip.Client.SystemCallback
 
+    alias Backbone.Channels
     alias Backbone.Sync
+
+    def authenticated(state) do
+      channels = Enum.map(Channels.all(), &(&1.name))
+      {:ok, %{state | channels: channels}}
+    end
 
     def process(state, event = %{"event" => "sync/channels"}) do
       Sync.sync_channels(state, event)
