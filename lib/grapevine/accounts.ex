@@ -76,7 +76,16 @@ defmodule Grapevine.Accounts do
   """
   @spec get_by_username(username()) :: {:ok, User.t()} | {:error, :not_found}
   def get_by_username(username) do
-    case Repo.get_by(User, username: username) do
+    username = String.downcase(username)
+
+    user =
+      User
+      |> where([u], fragment("lower(?) = ?", u.username, ^username))
+      |> limit(1)
+      |> Repo.all()
+      |> List.first()
+
+    case user do
       nil ->
         {:error, :not_found}
 
