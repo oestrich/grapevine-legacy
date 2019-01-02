@@ -3,8 +3,6 @@ defmodule Grapevine.Application do
 
   use Application
 
-  @report_errors Application.get_env(:grapevine, :errors)[:report]
-
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   def start(_type, _args) do
@@ -14,7 +12,8 @@ defmodule Grapevine.Application do
       {Grapevine.Tells, []}
     ]
 
-    if @report_errors do
+    report_errors = Application.get_env(:grapevine, :errors)[:report]
+    if report_errors do
       {:ok, _} = Logger.add_backend(Sentry.LoggerBackend)
     end
 
