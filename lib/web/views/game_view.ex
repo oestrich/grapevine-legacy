@@ -17,7 +17,15 @@ defmodule Web.GameView do
         content_tag(:i, "", class: "fa fa-circle online", alt: "Game Online", title: "Online")
 
       _ ->
-        content_tag(:i, "", class: "fa fa-circle offline", alt: "Game Offline", title: "Offline")
+        mssp_cutoff = Timex.now() |> Timex.shift(minutes: -90)
+
+        case Timex.before?(mssp_cutoff, game.mssp_last_seen_at) do
+          true ->
+            content_tag(:i, "", class: "fa fa-adjust online", alt: "Game Online", title: "Online")
+
+          _ ->
+            content_tag(:i, "", class: "fa fa-circle offline", alt: "Game Offline", title: "Offline")
+        end
     end
   end
 
