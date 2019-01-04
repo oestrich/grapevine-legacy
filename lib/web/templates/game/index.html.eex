@@ -5,22 +5,28 @@
   </ol>
 </nav>
 
-<table class="table games">
-  <thead>
-    <th scope="col">Name</th>
-    <th scope="col">Server</th>
-  </thead>
-  <tbody>
-    <%= Enum.map(@games, fn game -> %>
-      <tr class="game">
-        <td>
-          <%= online_status(game) %>
-          <%= link(game.name, to: game_path(@conn, :show, game.short_name)) %>
-        </td>
-        <td><%= game.user_agent %></td>
-      </tr>
-    <% end) %>
-  </tbody>
-</table>
+<section>
+  <nav>
+    <h3 class="name">Games</h3>
+  </nav>
 
-<p><%= Enum.count(@games) %> Games</p>
+  <table class="table games">
+    <thead>
+      <th scope="col">Name</th>
+      <th scope="col">Server</th>
+    </thead>
+    <tbody>
+      <%= Enum.map(@games, fn game -> %>
+        <tr class="game">
+          <td>
+            <%= online_status(game) %>
+            <%= link(game.name, to: game_path(@conn, :show, game.short_name)) %>
+          </td>
+          <td><%= game.user_agent %></td>
+        </tr>
+      <% end) %>
+    </tbody>
+  </table>
+
+  <p><%= Enum.count(@games) %> Games</p>
+</section>

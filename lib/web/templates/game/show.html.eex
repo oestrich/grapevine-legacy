@@ -6,15 +6,18 @@
   </ol>
 </nav>
 
-<div class="game">
-  <h3>
-    <%= online_status(@game) %>
-    <%= @game.name %>
+<section class="game">
+  <nav>
+    <h3 class="name">
+      <%= online_status(@game) %>
 
-    <%= if @game.homepage_url do %>
-      <span class="home-page"><%= link(@game.homepage_url, to: @game.homepage_url) %></span>
-    <% end %>
-  </h3>
+      <%= @game.name %>
+
+      <%= if @game.homepage_url do %>
+        <span class="home-page"><%= link(@game.homepage_url, to: @game.homepage_url) %></span>
+      <% end %>
+    </h3>
+  </nav>
 
   <hr />
 
@@ -101,4 +104,4 @@
       </div>
     </div>
   <% end %>
-</div>
+</section>
