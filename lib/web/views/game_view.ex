@@ -21,7 +21,7 @@ defmodule Web.GameView do
 
         case Timex.before?(mssp_cutoff, game.mssp_last_seen_at) do
           true ->
-            content_tag(:i, "", class: "fa fa-adjust online", alt: "Game Online", title: "Online")
+            content_tag(:i, "", class: "fa fa-adjust online", alt: "Seen on MSSP", title: "Seen on MSSP")
 
           _ ->
             content_tag(:i, "", class: "fa fa-circle offline", alt: "Game Offline", title: "Offline")
