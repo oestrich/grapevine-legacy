@@ -9,6 +9,9 @@ defmodule Web.AchievementController do
       conn
       |> assign(:game, game)
       |> assign(:achievements, Achievements.all(game))
+      |> assign(:title, "#{game.name} Achievements - Grapevine")
+      |> assign(:open_graph_title, "#{game.name} Achievements")
+      |> assign(:open_graph_url, game_achievement_url(conn, :index, game.short_name))
       |> render("index.html")
     end
   end

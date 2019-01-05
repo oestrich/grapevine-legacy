@@ -24,7 +24,7 @@ defmodule Web.GameController do
       |> assign(:title, "#{game.name} - Grapevine")
       |> assign(:open_graph_title, game.name)
       |> assign(:open_graph_description, game.description)
-      |> assign(:open_graph_url, game_url(conn, :show, game.id))
+      |> assign(:open_graph_url, game_url(conn, :show, game.short_name))
       |> render("show.html")
     end
   end
