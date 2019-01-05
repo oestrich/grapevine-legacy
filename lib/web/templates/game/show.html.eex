@@ -17,6 +17,10 @@
         <span class="home-page"><%= link(@game.homepage_url, to: @game.homepage_url) %></span>
       <% end %>
     </h3>
+
+    <div class="actions">
+      <%= link("Achievements", to: game_achievement_path(@conn, :index, @game.short_name), class: "btn btn-flat") %>
+    </div>
   </nav>
 
   <hr />

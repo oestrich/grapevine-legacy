@@ -35,7 +35,9 @@ defmodule Web.Router do
 
     get "/", PageController, :index
 
-    resources("/games", GameController, only: [:index, :show])
+    resources("/games", GameController, only: [:index, :show]) do
+      resources("/achievements", AchievementController, only: [:index])
+    end
 
     get("/media", PageController, :media)
 

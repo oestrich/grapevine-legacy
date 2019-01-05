@@ -130,19 +130,19 @@ pre {
 
   &:not(:disabled):not(.disabled):active:focus,
   &:focus {
-    box-shadow: 0 0 0 0.2rem rgba(187, 143, 225, .5);
+    box-shadow: 0 0 0 0.2rem $purple-1;
   }
 
   &:not(:disabled):not(.disabled).active,
   &:not(:disabled):not(.disabled):active {
-    background-color: $dark-purple;
-    border-color: $dark-purple;
+    background-color: $purple-01;
+    border-color: $purple-01;
   }
 
   &:active,
   &:hover {
-    background-color: $dark-purple;
-    border-color: $dark-purple;
+    background-color: $purple-01;
+    border-color: $purple-01;
   }
 }
 
