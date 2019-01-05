@@ -83,6 +83,12 @@ defmodule Grapevine.GossipCallback do
       {:ok, %{state | channels: channels}}
     end
 
+    def process(state, event = %{"event" => "sync/achievements"}) do
+      Sync.sync_achievements(event)
+
+      {:ok, state}
+    end
+
     def process(state, event = %{"event" => "sync/channels"}) do
       Sync.sync_channels(state, event)
     end
