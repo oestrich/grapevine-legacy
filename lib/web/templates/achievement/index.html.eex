@@ -26,6 +26,16 @@
             <span class="description"><%= achievement.description %></span>
           </div>
         </li>
+      <% else %>
+        <li class="achievement">
+          <div class="points">
+            <span>? pts</span>
+          </div>
+          <div class="information">
+            <h4 class="title">?</h4>
+            <span class="description">&nbsp;</span>
+          </div>
+        </li>
       <% end %>
     <% end) %>
   </ul>
