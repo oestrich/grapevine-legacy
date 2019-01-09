@@ -1,4 +1,4 @@
-<div class="position-relative overflow-hidden p-2 p-md-3 m-md-3 text-center bg-light">
+<div class="position-relative overflow-hidden text-center jumbotron">
   <div class="col-md-8 mx-auto my-2">
     <h1 class="display-4 font-weight-normal">Grapevine</h1>
     <p class="lead font-weight-normal">Welcome to Grapevine, player portal for the Gossip MUD chat network.</p>
@@ -8,15 +8,16 @@
   </div>
 </div>
 
-<div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
-  <div class="bg-dark mr-md-3 pt-1 px-1 pt-md-3 px-md-3 text-center text-white pb-sm-3">
+<div class="d-md-flex flex-md-equal w-100 my-md-3">
+  <div class="card-dark pt-1 px-1 pt-md-3 px-md-3 mr-2 text-center text-white pb-sm-3">
     <div class="my-3 mb-md-0 pb-3">
       <h2 class="display-5">Games</h2>
       <p class="lead">Read up on games connected to the network.</p>
       <%= link("View Games", to: game_path(@conn, :index), class: "btn btn-secondary") %>
     </div>
   </div>
-  <div class="bg-dark mr-md-3 pt-1 px-1 pt-md-3 px-md-3 text-center text-white pb-sm-3">
+
+  <div class="card-dark pt-1 px-1 pt-md-3 px-md-3 ml-2 text-center text-white pb-sm-3">
     <div class="my-3 mb-md-0 pb-3">
       <h2 class="display-5">Profile</h2>
       <p class="lead">Claim your game characters for your Grapevine profile.</p>
@@ -29,15 +30,16 @@
   </div>
 </div>
 
-<div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
-  <div class="bg-dark mr-md-3 pt-1 px-1 pt-md-3 px-md-3 text-center text-white pb-sm-3">
+<div class="d-md-flex flex-md-equal w-100 my-md-3">
+  <div class="card-dark pt-1 px-1 pt-md-3 px-md-3 mr-2 text-center text-white pb-sm-3">
     <div class="my-3 mb-md-0 pb-3">
       <h2 class="display-5">Achievements</h2>
       <p><i>Coming Soon</i></p>
       <p class="lead">Unlock achievements on games you play.</p>
     </div>
   </div>
-  <div class="bg-dark mr-md-3 pt-1 px-1 pt-md-3 px-md-3 text-center text-white pb-sm-3">
+
+  <div class="card-dark pt-1 px-1 pt-md-3 px-md-3 ml-2 text-center text-white pb-sm-3">
     <div class="my-3 mb-md-0 pb-3">
       <h2 class="display-5">Single Sign On</h2>
       <p class="lead">Use your Grapevine account to sign on to supported games.</p>
