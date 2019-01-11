@@ -16,7 +16,7 @@ defmodule Grapevine.Authorizations do
   Creates an authorization record
   """
   def start_auth(user, game, params) do
-    Telemetry.execute([:web, :oauth, :start], 1, %{user_id: user.id, game_id: game.id})
+    :telemetry.execute([:web, :oauth, :start], 1, %{user_id: user.id, game_id: game.id})
 
     with {:ok, redirect_uri} <- Map.fetch(params, "redirect_uri") do
       scopes =
@@ -108,7 +108,7 @@ defmodule Grapevine.Authorizations do
   Marks it as active
   """
   def authorize(authorization) do
-    Telemetry.execute([:web, :oauth, :authorized], 1, %{user_id: authorization.user_id, game_id: authorization.game_id})
+    :telemetry.execute([:web, :oauth, :authorized], 1, %{user_id: authorization.user_id, game_id: authorization.game_id})
 
     authorization
     |> Authorization.authorize_changeset()
@@ -121,7 +121,7 @@ defmodule Grapevine.Authorizations do
   Deletes the authorization record
   """
   def deny(authorization) do
-    Telemetry.execute([:web, :oauth, :denied], 1, %{user_id: authorization.user_id, game_id: authorization.game_id})
+    :telemetry.execute([:web, :oauth, :denied], 1, %{user_id: authorization.user_id, game_id: authorization.game_id})
 
     Repo.delete(authorization)
   end
@@ -157,12 +157,12 @@ defmodule Grapevine.Authorizations do
          {:ok, code} <- Ecto.UUID.cast(code) do
       case Repo.get_by(Authorization, game_id: game.id, redirect_uri: redirect_uri, code: code, active: true) do
         nil ->
-          Telemetry.execute([:web, :oauth, :invalid_grant], 1, %{client_id: client_id})
+          :telemetry.execute([:web, :oauth, :invalid_grant], 1, %{client_id: client_id})
 
           {:error, :invalid_grant}
 
         authorization ->
-          Telemetry.execute([:web, :oauth, :create_token], 1, %{user_id: authorization.user_id, game_id: authorization.game_id})
+          :telemetry.execute([:web, :oauth, :create_token], 1, %{user_id: authorization.user_id, game_id: authorization.game_id})
 
           create_token(authorization)
       end

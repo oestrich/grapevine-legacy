@@ -42,7 +42,7 @@ defmodule Metrics.OAuthInstrumenter do
       [:web, :oauth, :create_token],
     ]
 
-    Telemetry.attach_many("oauth-prometheus", events, __MODULE__, :handle_event, nil)
+    :telemetry.attach_many("grapevine-oauth", events, &handle_event/4, nil)
   end
 
   def handle_event([:web, :oauth, :start], _value, %{user_id: user_id, game_id: game_id}, _config) do
