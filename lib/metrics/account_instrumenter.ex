@@ -10,17 +10,17 @@ defmodule Metrics.AccountInstrumenter do
   @doc false
   def setup() do
     Counter.declare(
-      name: :grapevine_account_create_count,
+      name: :grapevine_account_create_total,
       help: "Total count of someone creating an account"
     )
 
     Counter.declare(
-      name: :grapevine_account_login_count,
+      name: :grapevine_account_login_total,
       help: "Total number of logins"
     )
 
     Counter.declare(
-      name: :grapevine_account_logout_count,
+      name: :grapevine_account_logout_total,
       help: "Total number of logouts"
     )
 
@@ -34,14 +34,14 @@ defmodule Metrics.AccountInstrumenter do
   end
 
   def handle_event([:grapevine, :accounts, :create], _value, _metadata, _config) do
-    Counter.inc(name: :grapevine_account_create_count)
+    Counter.inc(name: :grapevine_account_create_total)
   end
 
   def handle_event([:grapevine, :accounts, :session, :login], _value, _metadata, _config) do
-    Counter.inc(name: :grapevine_account_login_count)
+    Counter.inc(name: :grapevine_account_login_total)
   end
 
   def handle_event([:grapevine, :accounts, :session, :logout], _value, _metadata, _config) do
-    Counter.inc(name: :grapevine_account_logout_count)
+    Counter.inc(name: :grapevine_account_logout_total)
   end
 end
