@@ -6,6 +6,8 @@ defmodule Web.PageController do
   def index(conn, _params) do
     conn
     |> assign(:highlighted_game, Game.highlighted_game())
+    |> assign(:open_graph_title, "Grapevine")
+    |> assign(:open_graph_description, "MUD Player Network. Part of Gossip.")
     |> render("index.html")
   end
 

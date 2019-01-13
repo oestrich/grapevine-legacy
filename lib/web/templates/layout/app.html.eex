@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Grapevine">
+    <meta name="description" content="MUD Player Network. Part of the Gossip Network.">
     <meta name="author" content="Gossip Network">
 
     <%= if Map.has_key?(assigns, :open_graph_title) do %>
