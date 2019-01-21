@@ -1,5 +1,7 @@
 # Grapevine
 
+**This Grapevine has been deprecated. It has been merged into Gossip and then Gossip was renamed to Grapevine**
+
 ![Grapevine](https://grapevine.haus/images/grapevine.png)
 
 Grapevine player network, associated with [Gossip](https://github.com/oestrich/gossip).
